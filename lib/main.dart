@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/reg_page.dart';
 import 'telephone_code_verification/telephone_verification_code_page.dart';
 
 void main() {
@@ -30,7 +31,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,23 +38,30 @@ class _MyHomePageState extends State<MyHomePage> {
       //   title: Text(widget.title),
       // ),
       body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              ElevatedButton(
-                child: const Text('Перейти на экран подтверждения номера телефона'),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TelephoneCodeVerificationPage()),
-                  );
-                },
-              ),
-            ]),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+            Widget>[
+          ElevatedButton(
+            child: const Text('Перейти на экран подтверждения номера телефона'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        const TelephoneCodeVerificationPage()),
+              );
+            },
+          ),
+          ElevatedButton(
+            child: const Text('Перейти на экран регистрации'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const FormScreen()),
+              );
+            },
+          ),
+        ]),
       ),
     );
   }
 }
-
-
