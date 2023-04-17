@@ -37,30 +37,39 @@ class _MyHomePageState extends State<MyHomePage> {
       // appBar: AppBar(
       //   title: Text(widget.title),
       // ),
-      body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
-            Widget>[
-          ElevatedButton(
-            child: const Text('Перейти на экран подтверждения номера телефона'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const TelephoneCodeVerificationPage()),
-              );
-            },
-          ),
-          ElevatedButton(
-            child: const Text('Перейти на экран регистрации'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FormScreen()),
-              );
-            },
-          ),
-        ]),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        margin: const EdgeInsets.all(50),
+        child: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                ElevatedButton(
+                  child: const Text('Подтвердить номер телефона'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const TelephoneCodeVerificationPage()),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  child: const Text('Перейти на экран регистрации'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const FormScreen()),
+                    );
+                  },
+                ),
+              ]),
+        ),
       ),
     );
   }
