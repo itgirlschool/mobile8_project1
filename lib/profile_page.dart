@@ -69,7 +69,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     return TextFormField(
       decoration: const InputDecoration(
           labelText: 'Напишите о себе несколько предложений'),
-      keyboardType: TextInputType.multiline,
+      keyboardType: TextInputType.text,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Напишите о себе ';
