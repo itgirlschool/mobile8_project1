@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/telephone_code_verification/telephone_verification_code_page.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -9,12 +10,9 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   String? _name;
-
   String? _contact;
   String? _email;
-
   String? _password;
-
   var _approve = false;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -122,6 +120,11 @@ class _FormScreenState extends State<FormScreen> {
                         } else {
                           text = 'Форма успешно заполнена';
                           color = Colors.green;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const TelephoneCodeVerificationPage()));
                         }
 
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -145,4 +148,3 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 }
-
