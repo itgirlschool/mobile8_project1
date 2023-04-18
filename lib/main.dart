@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/profile_page.dart';
 import 'package:mobile8_project1/reg_page.dart';
 import 'userPreferences.dart';
 
