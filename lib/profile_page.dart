@@ -9,12 +9,9 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreen extends State<ProfileScreen> {
   String? _name;
-
   String? _dataBirthday;
   String? _cityName;
-
   String? _about;
-
   var _approve = false;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -36,7 +33,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   Widget buildDataField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Email'),
+      decoration: const InputDecoration(labelText: 'Дата рождения'),
       keyboardType: TextInputType.datetime,
       validator: (value) {
         if (value!.isEmpty) {
@@ -52,7 +49,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget biuldCityField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Ваш город'),
-      keyboardType: TextInputType.phone,
+      keyboardType: TextInputType.multiline,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Введите ваш город';
@@ -71,7 +68,7 @@ class _ProfileScreen extends State<ProfileScreen> {
       keyboardType: TextInputType.multiline,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Напишите о себе несколько предложений';
+          return 'Напишите о себе ';
         }
       },
       onSaved: (value) {
