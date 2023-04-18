@@ -94,7 +94,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Форма для регистрации'),
+        title: const Text('Профиль пользователя'),
       ),
       body: Container(
         padding: const EdgeInsets.all(10),
@@ -127,9 +127,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MyHomePage(
-                                    title: 'Данные в профиле успешно сохранены',
-                                  )),
+                              builder: (context) => const FormScreen2()),
                         );
                       }
 

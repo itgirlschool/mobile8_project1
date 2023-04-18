@@ -1,3 +1,4 @@
+import 'package:mobile8_project1/profile_page.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -80,6 +81,11 @@ class _TelephoneCodeVerificationPageState
                                 setState(() {
                                   bottomMessageVisible = true;
                                   sendPinButtonDisabled = true;
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProfileScreen()));
                                 });
                               },
                         child: const Padding(
@@ -177,5 +183,3 @@ class _TelephoneCodeVerificationPageState
 }
 
 final pinController = TextEditingController();
-
-
