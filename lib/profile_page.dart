@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/main.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,6 +14,9 @@ class _ProfileScreen extends State<ProfileScreen> {
   String? _cityName;
   String? _about;
   var _approve = false;
+
+  var text;
+  var color;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -79,7 +83,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   Widget biuldApproveField() {
     return CheckboxListTile(
-        title: const Text('Я даю согласие на обработку персональных данных'),
+        title: const Text('Я хочу помогать'),
         value: _approve,
         onChanged: (bool? value) {
           setState(() => _approve = value!);
@@ -110,28 +114,34 @@ class _ProfileScreen extends State<ProfileScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      if (_formkey.currentState!.validate()) {
+                      if (!_formkey.currentState!.validate()) {
                         Color color = Colors.red;
                         String text;
+                      }
 
-                        if (_approve == false) {
-                          text =
-                              'Необходимо предоствить согласие на обработку персональных данных';
-                        } else {
-                          text = 'Форма успешно заполнена';
-                          color = Colors.green;
-                        }
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(text),
-                            backgroundColor: color,
-                          ),
+                      if (!_formkey.currentState!.validate()) {
+                        text = 'Необходимо заполнить поля';
+                      } else {
+                        text = 'Данные профиля сохранены';
+                        color = Colors.green;
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MyHomePage(
+                                    title: 'Данные в профиле сохранены',
+                                  )),
                         );
                       }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(text),
+                          backgroundColor: color,
+                        ),
+                      );
                     },
                     child: const Text(
-                      'Зарегистрироваться',
+                      'Сохранить',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
