@@ -1,7 +1,7 @@
 import 'package:mobile8_project1/profile_page.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../userPreferences.dart';
 
 class TelephoneCodeVerificationPage extends StatefulWidget {
   const TelephoneCodeVerificationPage({Key? key}) : super(key: key);
@@ -81,11 +81,6 @@ class _TelephoneCodeVerificationPageState
                                 setState(() {
                                   bottomMessageVisible = true;
                                   sendPinButtonDisabled = true;
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProfileScreen()));
                                 });
                               },
                         child: const Padding(
@@ -112,7 +107,7 @@ class _TelephoneCodeVerificationPageState
                       });
                     },
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.only(bottom: 60),
                       child: AnimatedOpacity(
                         opacity: bottomMessageVisible ? 1.0 : 0.0,
                         duration: const Duration(milliseconds: 1800),
@@ -165,21 +160,43 @@ class _TelephoneCodeVerificationPageState
   }
 
   Future<void> validateAndPush(pin) async {
-    final prefs = await SharedPreferences.getInstance();
+    //final prefs = await SharedPreferences.getInstance();
     if (pin != correctPin) {
       setState(() {
         pinError = 'Неверный код';
       });
     } else {
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => TelephoneCodeVerificationPage()),  //!TODO: Сделать переход на следующую страницу по правильному пути
-      // );
+      UserPreferences().setTelephoneVerificationComplete();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ProfileScreen(),
+        ),
+      );
 
-      prefs.setBool('registration_completed', true);
+      //prefs.setBool('registration_completed', true);
     }
   }
 }
 
 final pinController = TextEditingController();
+//
+// bool goToMainPage = false;
+// bool goToProfilePage = false;
+// goToMainPage = UserPreferences().getRegistrationComplete();
+// goToProfilePage = UserPreferences().getTelephoneVerificationComplete();
+// if (goToMainPage) {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (context) => const FormScreen2(),
+// ),
+// );
+// } else if (goToProfilePage) {
+// Navigator.push(
+// context,
+// MaterialPageRoute(
+// builder: (context) => const ProfileScreen(),
+// ),
+// );
+// } else {
