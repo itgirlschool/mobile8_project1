@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/profile_page.dart';
 import 'package:mobile8_project1/reg_page.dart';
 import 'telephone_code_verification/telephone_verification_code_page.dart';
 
@@ -65,6 +66,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => const FormScreen()),
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                  child: const Text('Перейти на экран профиля'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ProfileScreen()),
                     );
                   },
                 ),

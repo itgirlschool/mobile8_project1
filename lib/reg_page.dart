@@ -9,12 +9,9 @@ class FormScreen extends StatefulWidget {
 
 class _FormScreenState extends State<FormScreen> {
   String? _name;
-
   String? _contact;
   String? _email;
-
   String? _password;
-
   var _approve = false;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -145,4 +142,3 @@ class _FormScreenState extends State<FormScreen> {
     );
   }
 }
-
