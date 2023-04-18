@@ -8,6 +8,10 @@ class UserPreferences {
   //ключ для текстового поля
   final _keyUsername = 'username';
   final _keyPassword = 'userpassword';
+  final _keyTelephoneVerified = 'telephoneVerified';
+  final _keyRegistrationComplete = 'registrationComplete';
+  final bool _telephoneVerifiedDefault = false;
+  final bool _registrationCompleteDefault = false;
 
   //инициализация preferences
   Future init() async => _preferences = await SharedPreferences.getInstance();
@@ -21,9 +25,27 @@ class UserPreferences {
 
   //читаем username
   String? getUsername() => _preferences?.getString(_keyUsername);
+
   String? getUserpassword() => _preferences?.getString(_keyPassword);
 
   // удаляем username
   Future<bool>? deleteUsername() => _preferences?.remove(_keyUsername);
+
   Future<bool>? deleteUserpassword() => _preferences?.remove(_keyPassword);
+
+  //сохраняем флажок, что верификация номера телефона кодом пройдена
+  Future<bool>? setTelephoneVerificationComplete() =>
+      _preferences?.setBool(_keyTelephoneVerified, true);
+
+  //сохраняем флажок, что регистрация полностью завершена, включая обязательную анкету
+  Future<bool>? setRegistrationComplete() =>
+      _preferences?.setBool(_keyRegistrationComplete, true);
+
+  //Проверка пройдена ли верификация номера телефона и полная регистрация
+  bool getTelephoneVerificationComplete() =>
+      _preferences?.getBool(_keyTelephoneVerified) ?? _telephoneVerifiedDefault;
+
+  bool getRegistrationComplete() =>
+      _preferences?.getBool(_keyRegistrationComplete) ??
+      _registrationCompleteDefault;
 }

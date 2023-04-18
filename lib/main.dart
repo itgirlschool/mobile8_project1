@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:mobile8_project1/profile_page.dart';
 import 'package:mobile8_project1/reg_page.dart';
 import 'userPreferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserPreferences().init();
-  runApp(const MyApp());
+  runApp(const AdvisersApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AdvisersApp extends StatelessWidget {
+  const AdvisersApp({super.key});
 
   @override
   Widget build(BuildContext context) {
