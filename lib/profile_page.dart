@@ -128,7 +128,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const MyHomePage(
-                                    title: 'Данные в профиле сохранены',
+                                    title: 'Данные в профиле успешно сохранены',
                                   )),
                         );
                       }
