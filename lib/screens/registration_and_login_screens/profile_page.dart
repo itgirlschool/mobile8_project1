@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile8_project1/main.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/helpers_list_page.dart';
+import '../../data/userPreferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -122,12 +123,13 @@ class _ProfileScreen extends State<ProfileScreen> {
                       if (!_formkey.currentState!.validate()) {
                         text = 'Необходимо заполнить поля';
                       } else {
+                        UserPreferences().setRegistrationComplete();
                         text = 'Данные профиля сохранены';
                         color = Colors.green;
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const FormScreen2()),
+                              builder: (context) => const HelpersListPage()),
                         );
                       }
 

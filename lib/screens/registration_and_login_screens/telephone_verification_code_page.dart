@@ -1,7 +1,7 @@
-import 'package:mobile8_project1/profile_page.dart';
+import 'package:mobile8_project1/screens/registration_and_login_screens/profile_page.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
-import '../userPreferences.dart';
+import '../../data/userPreferences.dart';
 
 class TelephoneCodeVerificationPage extends StatefulWidget {
   const TelephoneCodeVerificationPage({Key? key}) : super(key: key);
@@ -37,12 +37,12 @@ class _TelephoneCodeVerificationPageState
     return Scaffold(
       appBar: AppBar(
           leading: IconButton(
-        onPressed: () {
-          Navigator.pop(context);
-          pinController.setText('');
-        },
-        icon: const Icon(Icons.arrow_back),
-      )),
+            onPressed: () {
+              Navigator.pop(context);
+              pinController.setText('');
+            },
+            icon: const Icon(Icons.arrow_back),
+          )),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -78,11 +78,11 @@ class _TelephoneCodeVerificationPageState
                         onPressed: sendPinButtonDisabled
                             ? null
                             : () {
-                                setState(() {
-                                  bottomMessageVisible = true;
-                                  sendPinButtonDisabled = true;
-                                });
-                              },
+                          setState(() {
+                            bottomMessageVisible = true;
+                            sendPinButtonDisabled = true;
+                          });
+                        },
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Text(
@@ -130,7 +130,7 @@ class _TelephoneCodeVerificationPageState
                             height: 70,
                             child: Padding(
                               padding:
-                                  const EdgeInsets.only(right: 20, left: 20),
+                              const EdgeInsets.only(right: 20, left: 20),
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -174,29 +174,8 @@ class _TelephoneCodeVerificationPageState
         ),
       );
 
-      //prefs.setBool('registration_completed', true);
     }
   }
 }
 
 final pinController = TextEditingController();
-//
-// bool goToMainPage = false;
-// bool goToProfilePage = false;
-// goToMainPage = UserPreferences().getRegistrationComplete();
-// goToProfilePage = UserPreferences().getTelephoneVerificationComplete();
-// if (goToMainPage) {
-// Navigator.push(
-// context,
-// MaterialPageRoute(
-// builder: (context) => const FormScreen2(),
-// ),
-// );
-// } else if (goToProfilePage) {
-// Navigator.push(
-// context,
-// MaterialPageRoute(
-// builder: (context) => const ProfileScreen(),
-// ),
-// );
-// } else {
