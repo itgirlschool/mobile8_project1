@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile8_project1/telephone_code_verification/telephone_verification_code_page.dart';
+import 'package:mobile8_project1/screens/registration_and_login_screens/telephone_verification_code_page.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});

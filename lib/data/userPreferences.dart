@@ -16,6 +16,9 @@ class UserPreferences {
   //инициализация preferences
   Future init() async => _preferences = await SharedPreferences.getInstance();
 
+  //функция очистки сохраненных данных пользователя - вызывать если надо сбросить данные
+  Future clear() async => _preferences?.clear();
+
   // задаем значение username нашему ключу
   Future setUsername(String username) async =>
       await _preferences?.setString(_keyUsername, username);
