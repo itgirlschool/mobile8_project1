@@ -7,6 +7,7 @@ class ThemeQuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
         title: const Text('Выберите тему вопроса'),
       ),
@@ -21,18 +22,18 @@ class ThemeQuestionPage extends StatelessWidget {
                 children: <Widget>[
                   Image.asset(
                     'assets/images/angel.jpg',
-                    width: 150,
+                    width: 200,
                   ),
-                  const Text('Family'),
+                  const Text('Семья'),
                 ],
               ),
               Column(
                 children: <Widget>[
                   Image.asset(
                     'assets/images/angel.jpg',
-                    width: 150,
+                    width: 200,
                   ),
-                  const Text('Health'),
+                  const Text('Работа'),
                 ],
               ),
             ],
@@ -45,18 +46,18 @@ class ThemeQuestionPage extends StatelessWidget {
                 children: <Widget>[
                   Image.asset(
                     'assets/images/angel.jpg',
-                    width: 150,
+                    width: 200,
                   ),
-                  const Text('Family'),
+                  const Text('Отношения'),
                 ],
               ),
               Column(
                 children: <Widget>[
                   Image.asset(
                     'assets/images/angel.jpg',
-                    width: 150,
+                    width: 200,
                   ),
-                  const Text('Health'),
+                  const Text('Дети'),
                 ],
               ),
             ],
