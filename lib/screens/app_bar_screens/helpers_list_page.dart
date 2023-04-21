@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
 
 class HelpersListPage extends StatelessWidget {
   const HelpersListPage({super.key});
@@ -10,17 +11,28 @@ class HelpersListPage extends StatelessWidget {
       body: Container(
         padding: const EdgeInsets.all(30),
         child: ListView(
-          children: const [
-            Text(
+          children: [
+            const Text(
               'Экран со списком помощников',
               style: TextStyle(
                   fontSize: 24,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),
             ),
-            SizedBox(
-              height: 20,
+            const SizedBox(
+              height: 300,
             ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                      builder: (context) => const ThemeQuestionPage()),
+                );
+              },
+              child: const Text(
+                  'Задать вопрос -  кнопка для теста для перехода а пункт меню в будущем'),
+            ),
+
             // buildNameYouField(),
             // biuldContactYouField(),
           ],
