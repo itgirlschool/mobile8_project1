@@ -37,6 +37,9 @@ class ThemeQuestionPage extends StatelessWidget {
                       height: 150,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Text('Семья', style: TextStyle(color: Colors.white)),
                 ],
               ),
@@ -55,6 +58,9 @@ class ThemeQuestionPage extends StatelessWidget {
                       width: 150,
                       height: 150,
                     ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   const Text('Работа', style: TextStyle(color: Colors.white)),
                 ],
@@ -81,6 +87,9 @@ class ThemeQuestionPage extends StatelessWidget {
                       height: 150,
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Text('Отношения',
                       style: TextStyle(color: Colors.white)),
                 ],
@@ -100,6 +109,9 @@ class ThemeQuestionPage extends StatelessWidget {
                         width: 150,
                         height: 150,
                       )),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   const Text(
                     'Дети',
                     style: TextStyle(color: Colors.white),
@@ -132,19 +144,26 @@ class _QuestionScreen extends State<QuestionScreen> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   Widget biuldQuestionField() {
-    return TextFormField(
-      decoration: const InputDecoration(
+    return const TextField(
+      decoration: InputDecoration(
           labelText: 'Напишите свой вопрос', border: OutlineInputBorder()),
-      keyboardType: TextInputType.text,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Напишите вопрос';
-        }
-      },
-      onSaved: (value) {
-        _question = value;
-      },
+      keyboardType: TextInputType.multiline,
+      maxLines: 4,
     );
+
+    // TextFormField(
+    //   decoration: const InputDecoration(
+    //       labelText: 'Напишите свой вопрос', border: OutlineInputBorder()),
+    //   keyboardType: TextInputType.text,
+    //   validator: (value) {
+    //     if (value!.isEmpty) {
+    //       return 'Напишите вопрос';
+    //     }
+    //   },
+    //   onSaved: (value) {
+    //     _question = value;
+    //   },
+    // );
   }
 
   Widget biuldPsychologistField() {
@@ -214,7 +233,7 @@ class _QuestionScreen extends State<QuestionScreen> {
                       );
                     },
                     child: const Text(
-                      'Оубликовать',
+                      'Опубликовать',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
