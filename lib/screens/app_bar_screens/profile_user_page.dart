@@ -1,4 +1,8 @@
+// // ignore: avoid_web_libraries_in_flutter
+// import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
 
 class ProfileUserPage extends StatelessWidget {
   const ProfileUserPage({super.key});
@@ -70,12 +74,12 @@ class PersonWidget extends StatelessWidget {
         title: const Text('Профиль'),
       ),
       body: Container(
-        child: _buildMainColumn(),
+        child: _buildMainColumn(context),
       ),
     );
   }
 
-  Widget _buildMainColumn() => ListView(
+  Widget _buildMainColumn(BuildContext context) => ListView(
         children: [
           _builTopImage(),
           Center(
@@ -98,6 +102,9 @@ class PersonWidget extends StatelessWidget {
                       child: _buildAction(),
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     margin: const EdgeInsets.all(5),
                     child: _buildDesc(),
@@ -105,7 +112,18 @@ class PersonWidget extends StatelessWidget {
                 ],
               ),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // BuildContext context;
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ThemeQuestionPage()));
+            },
+            child: const Text('Написать'),
+          ),
         ],
       );
   Widget _builTopImage() => Card(
