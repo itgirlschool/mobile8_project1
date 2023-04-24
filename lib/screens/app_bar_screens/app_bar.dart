@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
 
 import 'helpers_list_page.dart';
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -31,12 +34,22 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-            label: 'Помощники',
-            icon: Icon(Icons.favorite),
+           // icon: Image.asset(
+           // "images/people_black_24dp.svg"),
+            //label: 'Сообщения',
+            // child: Image(
+            // image: AssetImage("assets/images/people_black_24dp.svg")),
+            icon: ImageIcon(
+            AssetImage("images/helpers.svg"),
           ),
+          ),
+            //label: 'Помощники',
+            //child: Image(
+           // image: AssetImage("assets/images/people"),
           BottomNavigationBarItem(
-            label: 'Сообщения',
-            icon: Icon(Icons.music_note),
+            icon: ImageIcon(
+              AssetImage("images/helpers.svg"),
+            ),
           ),
           BottomNavigationBarItem(
             label: 'Вопрос',
@@ -54,22 +67,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: <Widget>[
         HelpersListPage(),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Сообщения'),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Задать вопрос'),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Ждут помощи'),
-        ),
-        Container(
-          alignment: Alignment.center,
-          child: const Text('Моя анкета'),
-        ),
+        HelpersListPage(),
+        ThemeQuestionPage(),
+        ThemeQuestionPage(),
+        ProfileUserPage(),
       ][_currentIndex],
     );
   }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/app_bar.dart';
 import 'data/userPreferences.dart';
-import 'screens/registration_and_login_screens/profile_page.dart';
 import 'screens/registration_and_login_screens/login_page.dart';
-import 'screens/app_bar_screens/helpers_list_page.dart';
+
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,18 +22,13 @@ class AdvisersApp extends StatelessWidget {
   Widget build(BuildContext context) {
     if (goToMainPage) {
       return const MaterialApp(
-        title: 'Экран помощники',
-        home: HelpersListPage(),
-      );
-    } else if (goToProfilePage) {
-      return const MaterialApp(
-        title: 'Экран анкеты',
-        home: ProfileScreen(),
+        title: 'Вход',
+        home: LoginPage(),
       );
     } else {
       return const MaterialApp(
-        title: 'Вход',
-        home: LoginPage(),
+        //title: 'Вход',
+        home: MyHomePage(),
       );
     }
   }

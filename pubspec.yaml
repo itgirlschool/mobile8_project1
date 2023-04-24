@@ -62,6 +62,7 @@ flutter:
   assets:
     - lib/data/photos/
     - lib/data/
+    - assets/images/
     # - assets/images/back.jpg
     # - assets/images/back1.jpg
     - assets/images/angel.jpg
