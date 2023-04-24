@@ -22,13 +22,13 @@ class AdvisersApp extends StatelessWidget {
   Widget build(BuildContext context) {
     if (goToMainPage) {
       return const MaterialApp(
-        title: 'Вход',
-        home: LoginPage(),
+        //title: 'Вход',
+        home: MyHomePage(),
       );
     } else {
       return const MaterialApp(
-        //title: 'Вход',
-        home: MyHomePage(),
+        title: 'Вход',
+        home: LoginPage(),
       );
     }
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
-
 import 'helpers_list_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -34,34 +33,24 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-           // icon: Image.asset(
-           // "images/people_black_24dp.svg"),
-            //label: 'Сообщения',
-            // child: Image(
-            // image: AssetImage("assets/images/people_black_24dp.svg")),
-            icon: ImageIcon(
-            AssetImage("images/helpers.svg"),
-          ),
-          ),
-            //label: 'Помощники',
-            //child: Image(
-           // image: AssetImage("assets/images/people"),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage("images/helpers.svg"),
-            ),
+            label: 'Помощники',
+            icon: Icon(Icons.people),
           ),
           BottomNavigationBarItem(
-            label: 'Вопрос',
-            icon: Icon(Icons.location_on),
+            label: 'Сообщения',
+            icon: Icon(Icons.message),
           ),
           BottomNavigationBarItem(
-            label: 'Помощь',
-            icon: Icon(Icons.library_books),
+            label: 'Задать вопрос',
+            icon: Icon(Icons.question_mark),
+          ),
+          BottomNavigationBarItem(
+            label: 'Ждут помощи',
+            icon: Icon(Icons.add_comment),
           ),
           BottomNavigationBarItem(
             label: 'Моя анкета',
-            icon: Icon(Icons.library_books),
+            icon: Icon(Icons.account_circle),
           ),
         ],
       ),
