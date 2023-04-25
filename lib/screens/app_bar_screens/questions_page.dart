@@ -10,7 +10,6 @@ class ThemeQuestionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
       appBar: AppBar(
         title: const Text('Выберите тему вопроса'),
       ),
@@ -25,44 +24,55 @@ class ThemeQuestionPage extends StatelessWidget {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const QuestionScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const QuestionScreen()));
                     },
-                    child: Image.network(
-                      fit: BoxFit.cover,
-                      'https://avatars.dzeninfra.ru/get-zen_doc/163240/pub_5d4a8884f8a62300acfc1679_5d4be652dfdd2500ad98f831/scale_1200',
-                      width: 150,
-                      height: 150,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Color(0xFFC0BFBF), //<-- SEE HERE
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+
+                      child: Image.asset(
+                        fit: BoxFit.cover,
+                        'assets/images/family.png',
+                        width: 150,
+                        height: 150,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('Семья', style: TextStyle(color: Colors.white)),
+                  const Text('Семья'),
                 ],
               ),
               Column(
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const QuestionScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const QuestionScreen()));
                     },
-                    child: Image.network(
-                      fit: BoxFit.cover,
-                      'https://gas-kvas.com/uploads/posts/2023-01/1673393686_gas-kvas-com-p-anime-risunki-na-noutbuke-2.jpg',
-                      width: 150,
-                      height: 150,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Color(0xFFABABAB), //<-- SEE HERE
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      child: Image.asset(
+                        fit: BoxFit.cover,
+                        'assets/images/work.png',
+                        width: 150,
+                        height: 150,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('Работа', style: TextStyle(color: Colors.white)),
+                  const Text('Работа'),
                 ],
               ),
             ],
@@ -75,46 +85,57 @@ class ThemeQuestionPage extends StatelessWidget {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const QuestionScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => const QuestionScreen()));
                     },
-                    child: Image.network(
-                      fit: BoxFit.cover,
-                      'https://i.pinimg.com/originals/3f/68/8c/3f688c4b95e3b96ac4075e82f8efbd82.jpg',
-                      width: 150,
-                      height: 150,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Color(0xFFABABAB), //<-- SEE HERE
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+
+                      child: Image.asset(
+                        fit: BoxFit.cover,
+                        'assets/images/relationship.jpg',
+                        width: 150,
+                        height: 150,
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('Отношения',
-                      style: TextStyle(color: Colors.white)),
+                  const Text('Отношения'),
                 ],
               ),
               Column(
                 children: <Widget>[
                   GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const QuestionScreen()));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => const QuestionScreen()));
                       },
-                      child: Image.network(
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        side: BorderSide(
+                          color: Color(0xFFABABAB), //<-- SEE HERE
+                        ),
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+
+                      child: Image.asset(
                         fit: BoxFit.cover,
-                        'https://ip1.anime-pictures.net/direct-images/634/63403bf6758458943c5d453cfcbedf62.jpg?if=ANIME-PICTURES.NET_-_207771-1684x1190-original-taka+%28tsmix%29-long+hair-blush-short+hair-black+hair.jpg',
+                        'assets/images/kids.png',
                         width: 150,
                         height: 150,
-                      )),
+                      ),
+                    ),),
                   const SizedBox(
                     height: 10,
                   ),
                   const Text(
                     'Дети',
-                    style: TextStyle(color: Colors.white),
+
                   ),
                 ],
               ),
@@ -145,8 +166,7 @@ class _QuestionScreen extends State<QuestionScreen> {
 
   Widget biuldQuestionField() {
     return const TextField(
-      decoration: InputDecoration(
-          labelText: 'Напишите свой вопрос', border: OutlineInputBorder()),
+      decoration: InputDecoration(labelText: 'Напишите свой вопрос', border: OutlineInputBorder()),
       keyboardType: TextInputType.multiline,
       maxLines: 4,
     );
@@ -168,8 +188,7 @@ class _QuestionScreen extends State<QuestionScreen> {
 
   Widget biuldPsychologistField() {
     return CheckboxListTile(
-        title:
-            const Text('Хочу, чтобы на мой вопрос отвечали только специалисты'),
+        title: const Text('Хочу, чтобы на мой вопрос отвечали только специалисты'),
         value: _psychologist,
         onChanged: (bool? value) {
           setState(() => _psychologist = value!);
@@ -220,8 +239,7 @@ class _QuestionScreen extends State<QuestionScreen> {
                         color = Colors.green;
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const HelpersListPage()),
+                          MaterialPageRoute(builder: (context) => const HelpersListPage()),
                         );
                       }
 

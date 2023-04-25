@@ -64,8 +64,7 @@ flutter:
     - lib/data/
     # - assets/images/back.jpg
     # - assets/images/back1.jpg
-    - assets/images/angel.jpg
-    - assets/images/famaly.jpg
+    - assets/images/
     # - assets/images/bad.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
