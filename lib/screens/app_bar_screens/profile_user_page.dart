@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../classes.dart';
 
 class ProfileUserPage extends StatelessWidget {
@@ -17,6 +16,7 @@ class ProfileUserPage extends StatelessWidget {
 }
 
 class FavoriteWidget extends StatefulWidget {
+
   User? user;
 
   FavoriteWidget({super.key, this.user});
@@ -33,6 +33,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
   bool _isFavorited = false;
 
   //_FavoriteWidgetState(user);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -47,8 +48,10 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
         SizedBox(
           width: 40,
           child: Container(
+
             //child: Text('$_favoriteCount'),
             child: Text(user.rating.toString()),
+
           ),
         ),
       ],
@@ -63,6 +66,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       } else {
         _isFavorited = true;
         user.rating += 1;
+
       }
     });
   }
@@ -73,6 +77,7 @@ class PersonWidget extends StatelessWidget {
 
   PersonWidget({super.key, this.user});
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +87,7 @@ class PersonWidget extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
+
       ),
       body: Container(
         child: _buildMainColumn(),
@@ -135,11 +141,13 @@ class PersonWidget extends StatelessWidget {
         elevation: 5,
         child: Image.asset(
           user!.photo,
+
           fit: BoxFit.cover,
         ),
       );
 
   Widget _buildRaiting() => ListTile(
+
         title: Text(
           user!.name,
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
@@ -163,6 +171,7 @@ class PersonWidget extends StatelessWidget {
           if (user!.experienceYears >0) ...[
             _buildButton('Стаж ${user!.experienceYears} ${_getYearsTitle(user!.experienceYears)}', Icons.auto_graph, Colors.black),
           ]
+
         ],
       );
 
@@ -184,12 +193,15 @@ class PersonWidget extends StatelessWidget {
         ],
       );
 
+
   Widget _buildDesc() => Text(
         user!.aboutSelf,
+
         softWrap: true,
         style: TextStyle(fontSize: 16),
       );
 }
+
 
 String _getAnswersTitle(int numAnswers) {
   int lastDigit = numAnswers % 10;
@@ -216,3 +228,4 @@ String _getYearsTitle(int numYears) {
     return "лет";
   }
 }
+
