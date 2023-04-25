@@ -18,6 +18,8 @@ class User {
   bool helper;
   bool diploma;
   String photo;
+  int numAnswers;
+  int experienceYears;
 
   User(
       {required this.name,
@@ -31,6 +33,8 @@ class User {
       this.role = Role.basicUser,
       this.helper = false,
       this.diploma = false,
+      this.numAnswers = 0,
+      this.experienceYears = 0,
       this.photo = 'lib/data/photos/default.jpg'});
 
   User.testBasicUser()
@@ -46,7 +50,9 @@ class User {
         photo = 'lib/data/photos/default.jpg',
         role = Role.basicUser,
         helper = true,
-        diploma = true;
+        experienceYears = 0,
+        numAnswers = 10,
+        diploma = false;
 
   User.testPsychologist()
       : id = 101,
@@ -61,6 +67,8 @@ class User {
         role = Role.psychologist,
         helper = true,
         diploma = true,
+        numAnswers = 15,
+        experienceYears = 4,
         photo = 'lib/data/photos/default.jpg';
 
   birthDateToString() {
@@ -75,12 +83,14 @@ class Question {
   DateTime postTime = DateTime.now();
   String text = '';
   int numAnswers;
+  bool anonymous;
 
   Question({
     this.questionTheme = QuestionTheme.family,
     required String text,
     this.numAnswers = 0,
     this.id = 0,
+    this.anonymous = false,
   });
 
   Question.testQuestion()
@@ -90,6 +100,7 @@ class Question {
         text =
             'Как наладить отношения с родственником, с которым я постоянно конфликтую?',
         postTime = DateTime.now(),
+        anonymous = false,
         questionTheme = QuestionTheme.family;
 }
 

@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
+import '../../classes.dart';
 
 class ProfileUserPage extends StatelessWidget {
-  const ProfileUserPage({super.key});
+  User? user;
+
+  //ProfileUserPage({super.key, this.user});
+  ProfileUserPage({super.key, this.user}) {
+    user = user ?? User.testBasicUser();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Profile User',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const PersonWidget(),
-    );
+    return PersonWidget(user: user!);
   }
 }
 
 class FavoriteWidget extends StatefulWidget {
-  const FavoriteWidget({super.key});
+
+  User? user;
+
+  FavoriteWidget({super.key, this.user});
 
   @override
-  State<FavoriteWidget> createState() => _FavoriteWidgetState();
+  State<FavoriteWidget> createState() => _FavoriteWidgetState(user!);
 }
 
 class _FavoriteWidgetState extends State<FavoriteWidget> {
+  User user;
+
+  _FavoriteWidgetState(this.user);
+
   bool _isFavorited = false;
-  int _favoriteCount = 375;
+
+  //_FavoriteWidgetState(user);
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +42,16 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
           child: IconButton(
             onPressed: _toggleFavorite,
             color: Colors.red[500],
-            icon: (_isFavorited
-                ? Icon(Icons.favorite)
-                : Icon(Icons.favorite_border)),
+            icon: (_isFavorited ? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
           ),
         ),
         SizedBox(
           width: 40,
           child: Container(
-            child: Text('$_favoriteCount'),
+
+            //child: Text('$_favoriteCount'),
+            child: Text(user.rating.toString()),
+
           ),
         ),
       ],
@@ -51,23 +62,32 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
     setState(() {
       if (_isFavorited) {
         _isFavorited = false;
-        _favoriteCount -= 1;
+        user.rating -= 1;
       } else {
         _isFavorited = true;
-        _favoriteCount += 1;
+        user.rating += 1;
+
       }
     });
   }
 }
 
 class PersonWidget extends StatelessWidget {
-  const PersonWidget({super.key});
+  User? user;
+
+  PersonWidget({super.key, this.user});
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Профиль'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+
       ),
       body: Container(
         child: _buildMainColumn(),
@@ -98,6 +118,9 @@ class PersonWidget extends StatelessWidget {
                       child: _buildAction(),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
                     margin: const EdgeInsets.all(5),
                     child: _buildDesc(),
@@ -108,6 +131,7 @@ class PersonWidget extends StatelessWidget {
           )
         ],
       );
+
   Widget _builTopImage() => Card(
         margin: const EdgeInsets.only(
           left: 20,
@@ -116,28 +140,38 @@ class PersonWidget extends StatelessWidget {
         ),
         elevation: 5,
         child: Image.asset(
-          'assets/images/angel.jpg',
+          user!.photo,
+
           fit: BoxFit.cover,
         ),
       );
 
   Widget _buildRaiting() => ListTile(
-        title: const Text(
-          'Великий Психолог',
+
+        title: Text(
+          user!.name,
           style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
         ),
-        subtitle: const Text('Москва'),
+        subtitle: Text(user!.city),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [FavoriteWidget()],
+          children: [
+            FavoriteWidget(user: user!),
+          ],
         ),
       );
+
   Widget _buildAction() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildButton('38 советов', Icons.star, Colors.black),
-          _buildButton('Диплом', Icons.topic, Colors.black),
-          _buildButton('Стаж 5 лет', Icons.auto_graph, Colors.black),
+          _buildButton('${user!.numAnswers} ${_getAnswersTitle(user!.numAnswers)}', Icons.star, Colors.black),
+          if (user!.diploma) ...[
+            _buildButton('Диплом', Icons.topic, Colors.black),
+          ],
+          if (user!.experienceYears >0) ...[
+            _buildButton('Стаж ${user!.experienceYears} ${_getYearsTitle(user!.experienceYears)}', Icons.auto_graph, Colors.black),
+          ]
+
         ],
       );
 
@@ -158,9 +192,40 @@ class PersonWidget extends StatelessWidget {
           ),
         ],
       );
-  Widget _buildDesc() => const Text(
-        'Профессиональный психолог. Помогаю людям прожить кризисные состояния. Работаю с низкой самооценкой, проблемами в личной жизни, с детскими травмами. ',
+
+
+  Widget _buildDesc() => Text(
+        user!.aboutSelf,
+
         softWrap: true,
         style: TextStyle(fontSize: 16),
       );
 }
+
+
+String _getAnswersTitle(int numAnswers) {
+  int lastDigit = numAnswers % 10;
+  int lastTwoDigits = numAnswers % 100;
+
+  if (lastDigit == 1 && lastTwoDigits != 11) {
+    return "совет";
+  } else if (lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 10 || lastTwoDigits > 20)) {
+    return "совета";
+  } else {
+    return "советов";
+  }
+}
+
+String _getYearsTitle(int numYears) {
+  int lastDigit = numYears % 10;
+  int lastTwoDigits = numYears % 100;
+
+  if (lastDigit == 1 && lastTwoDigits != 11) {
+    return "год";
+  } else if (lastDigit >= 2 && lastDigit <= 4 && (lastTwoDigits < 10 || lastTwoDigits > 20)) {
+    return "года";
+  } else {
+    return "лет";
+  }
+}
+
