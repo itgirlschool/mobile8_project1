@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
-import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
 import '../../classes.dart';
 import '../../data/json_fetchers.dart';
 
@@ -44,32 +43,10 @@ class _HelpersListPageState extends State<HelpersListPage> {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const ThemeQuestionPage()),
-                      );
-                    },
-                    child: const Text('Задать вопрос -  кнопка для теста для перехода а пункт меню в будущем'),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ProfileUserPage()),
-                      );
-                    },
-                    child: const Text('Профиль -  кнопка для теста для перехода а пункт меню в будущем'),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
                   _buildSearchHelper(),
                   const SizedBox(
                     height: 20,
