@@ -28,7 +28,24 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  diffutil_dart: ^3.0.0
+  equatable: ^2.0.5
   flutter:
+    sdk: flutter
+  flutter_chat_types: ^3.6.0
+  flutter_link_previewer: ^3.2.0
+  flutter_parsed_text: ^2.2.1
+  intl: ^0.17.0
+  meta: ^1.8.0
+  photo_view: ^0.14.0
+  scroll_to_index: ^3.0.1
+  url_launcher: ^6.1.6
+  visibility_detector: ^0.3.3
+
+dev_dependencies:
+  dart_code_metrics: ^4.21.3
+  flutter_lints: ^2.0.1
+  flutter_test:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
@@ -36,17 +53,34 @@ dependencies:
   cupertino_icons: ^1.0.2
   pinput: ^2.2.31
   shared_preferences: ^2.1.0
+  file_picker: ^5.2.11
+  # flutter_chat_types: ^3.6.0
+  flutter_chat_ui: ^1.6.6
+  image_picker: ^0.8.7+4
+  uuid: ^3.0.7
+  open_filex: ^4.3.2
+  path_provider: ^2.0.14
+  mime: ^1.0.4
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
+# dev_dependencies:
+#   flutter_test:
+#     sdk: flutter
+#   # flutter_chat_types: ^3.6.0
+#   flutter_link_previewer: ^3.2.0
+#   flutter_parsed_text: ^2.2.1
+#   intl: ^0.18.0
+#   meta: ^1.8.0
+#   photo_view: ^0.14.0
+#   scroll_to_index: ^3.0.1
+#   url_launcher: ^6.1.6
+#   visibility_detector: ^0.3.3
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+# The "flutter_lints" package below contains a set of recommended lints to
+# encourage good coding practices. The lint set provided by the package is
+# activated in the `analysis_options.yaml` file located at the root of your
+# package. See that file for information about deactivating specific lint
+# rules and activating additional ones.
+# flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -60,8 +94,32 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/messages.json
     - lib/data/photos/
     - lib/data/
+    - packages/flutter_chat_ui/assets/icon-arrow.png
+    - packages/flutter_chat_ui/assets/icon-attachment.png
+    - packages/flutter_chat_ui/assets/icon-delivered.png
+    - packages/flutter_chat_ui/assets/icon-document.png
+    - packages/flutter_chat_ui/assets/icon-error.png
+    - packages/flutter_chat_ui/assets/icon-seen.png
+    - packages/flutter_chat_ui/assets/icon-send.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-arrow.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-attachment.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-delivered.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-document.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-error.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-seen.png
+    - packages/flutter_chat_ui/assets/2.0x/icon-send.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-arrow.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-attachment.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-delivered.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-document.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-error.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-seen.png
+    - packages/flutter_chat_ui/assets/3.0x/icon-send.png
+
+    # - lib/data/massages.json
     # - assets/images/back.jpg
     # - assets/images/back1.jpg
     - assets/images/

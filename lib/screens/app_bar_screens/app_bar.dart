@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
 import 'helpers_list_page.dart';
+import 'messages_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -11,7 +12,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-
 
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: <Widget>[
         HelpersListPage(),
-        HelpersListPage(),
+        MessagesPage(),
         ThemeQuestionPage(),
         ThemeQuestionPage(),
         ProfileUserPage(),
