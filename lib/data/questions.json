@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "questionTheme": "family",
+    "postTime": "2023-04-23 11:20",
+    "text": "Как наладить отношения с родственником, с которым я постоянно конфликтую?",
+    "numAnswers": 4,
+    "anonymous" : false,
+    "user" :
+      {
+        "id": 1,
+        "name": "Ivan Ivanov",
+        "email": "ivan@mail.ru",
+        "phone": "+79111234567",
+        "birthDate": "1990-05-21",
+        "city": "Москва",
+        "aboutSelf": "Я люблю спорт, путешествия и книги. Работаю программистом.",
+        "role": "basicUser",
+        "diploma": false,
+        "helper" : true,
+        "rating" : 12,
+        "numAnswers" : 10,
+        "experienceYears" : 0,
+        "photo": "lib/data/photos/1.jpg"
+      }
+
+  },
+  {
+    "id": 2,
+    "questionTheme": "work",
+    "postTime": "2022-05-02 14:15",
+    "text": "Как научиться откладывать работу в сторону и не погружаться в нее с головой, взвешивая свои приоритеты и границы?",
+    "numAnswers": 1,
+    "anonymous" : false,
+    "user" :
+      {
+        "id": 2,
+        "name": "Maria Smirnova",
+        "email": "maria@mail.ru",
+        "phone": "+79112234567",
+        "birthDate": "1985-08-07",
+        "city": "Санкт-Петербург",
+        "aboutSelf": "Я занимаюсь бегом и йогой. Люблю изучать культуру разных стран.",
+        "role": "basicUser",
+        "diploma": false,
+        "helper" : true,
+        "rating" : 0,
+        "numAnswers" : 2,
+        "experienceYears" : 0,
+        "photo": "lib/data/photos/2.jpg"
+      }
+
+  },
+  {
+    "id": 3,
+    "questionTheme": "children",
+    "postTime": "2023-04-25 11:20",
+    "text": "Как справиться с беспокойством за своих детей, когда они далеко от вас?",
+    "numAnswers": 0,
+    "anonymous" : false,
+    "user" :
+      {
+        "id": 3,
+        "name": "Alexey Kuznetsov",
+        "email": "alexey@mail.ru",
+        "phone": "+79113234567",
+        "birthDate": "1995-02-15",
+        "city": "Нижний Новгород",
+        "aboutSelf": "Я работаю учителем и обожаю путешествовать на машине. Люблю читать книги по психологии.",
+        "role": "basicUser",
+        "diploma": false,
+        "helper" : true,
+        "rating" : 0,
+        "numAnswers" : 0,
+        "experienceYears" : 0,
+        "photo": "lib/data/photos/3.jpg"
+      }
+
+  },
+  {
+    "id": 4,
+    "questionTheme": "relationship",
+    "postTime": "2022-02-08 16:40",
+    "text": "Я часто чувствую, что отношения со своим партнером не развиваются так, как я бы хотела, и у меня возникает ощущение, что мы не находим общего языка. Что можно сделать, чтобы наши отношения стали более глубокими и насыщенными?",
+    "numAnswers": 0,
+    "anonymous" : false,
+    "user" :
+      {
+        "id": 4,
+        "name": "Elena Petrova",
+        "email": "elena@mail.ru",
+        "phone": "+79114234567",
+        "birthDate": "1980-11-27",
+        "city": "Екатеринбург",
+        "aboutSelf": "Я занимаюсь стрит-воркаутом и готовлю вегетарианские блюда. Работаю журналистом.",
+        "role": "basicUser",
+        "diploma": false,
+        "helper" : true,
+        "rating" : 17,
+        "numAnswers" : 6,
+        "experienceYears" : 0,
+        "photo": "lib/data/photos/4.jpg"
+      }
+
+  },
+  {
+    "id": 5,
+    "questionTheme": "family",
+    "postTime": "2022-02-01 10:30",
+    "text": "Как не чувствовать одиночество, когда рядом нет близких людей?",
+    "numAnswers": 0,
+    "anonymous" : true,
+    "user" :
+      {
+        "id": 5,
+        "name": "Dmitriy Sergeev",
+        "email": "dmitry@mail.ru",
+        "phone": "+79115234567",
+        "birthDate": "1993-12-03",
+        "city": "Казань",
+        "aboutSelf": "Я катаюсь на велосипеде и занимаюсь легкой атлетикой. Работаю бизнес-аналитиком.",
+        "role": "basicUser",
+        "diploma": false,
+        "helper" : true,
+        "rating" : 0,
+        "numAnswers" : 0,
+        "experienceYears" : 0,
+        "photo": "lib/data/photos/5.jpg"
+      }
+
+  }
+]
