@@ -34,7 +34,8 @@ class _HelpersListPageState extends State<HelpersListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Colors.blue,
+      backgroundColor: Colors.blue[50],
+     // backgroundColor: Colors.orange,
       appBar: AppBar(
         title: const Text('Помощники'),
       ),
@@ -106,9 +107,14 @@ class _HelpersListPageState extends State<HelpersListPage> {
         TextField(
           //controller: TextEditingController()..text = searchName,
           controller: nameController,
+
           decoration: const InputDecoration(
-            border: OutlineInputBorder(),
             labelText: 'Имя',
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Color(0xFFB6B6B6)),
+            ),
+            filled: true,
+            fillColor: Colors.white,
           ),
           keyboardType: TextInputType.text,
           onSubmitted: (String search) {
@@ -128,7 +134,12 @@ class _HelpersListPageState extends State<HelpersListPage> {
             controller: ratingController,
 
             decoration: const InputDecoration(
-              border: OutlineInputBorder(),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFB6B6B6)),
+              ),
+              //border: OutlineInputBorder(),
+              filled: true,
+              fillColor: Colors.white,
               labelText: 'Рейтинг ❤️ от',
             ),
             keyboardType: TextInputType.number,
@@ -143,16 +154,21 @@ class _HelpersListPageState extends State<HelpersListPage> {
             },
           ),
         ),
-        CheckboxListTile(
-          value: searchDiploma,
-          contentPadding: EdgeInsets.only(left: 0),
-          controlAffinity: ListTileControlAffinity.leading,
-          title: const Text('Дипломированный психолог'),
-          onChanged: (bool? value) => setState(
-            () {
-              userList = fetchSearchUserList(diplomaQuery: value);
-              searchDiploma = value!;
-            },
+        Theme(
+          data: ThemeData(
+            unselectedWidgetColor: Color(0xFFB6B6B6),
+          ),
+          child: CheckboxListTile(
+            value: searchDiploma,
+            contentPadding: EdgeInsets.only(left: 0),
+            controlAffinity: ListTileControlAffinity.leading,
+            title: const Text('Дипломированный психолог'),
+            onChanged: (bool? value) => setState(
+              () {
+                userList = fetchSearchUserList(diplomaQuery: value);
+                searchDiploma = value!;
+              },
+            ),
           ),
         ),
       ],

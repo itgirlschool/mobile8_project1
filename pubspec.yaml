@@ -37,6 +37,7 @@ dependencies:
   pinput: ^2.2.31
   shared_preferences: ^2.1.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
