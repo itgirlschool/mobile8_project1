@@ -1,22 +1,23 @@
 [
   {
     "author": {
-      "firstName": "John",
-      "id": "4c2307ba-3d40-442f-b1ff-b271f63904ca",
-      "lastName": "Doe"
+      "firstName": "Maria",
+      "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
+      "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
+      "lastName": "Smirnova"
     },
-    "createdAt": 1655648404000,
+    "createdAt": 1655624460000,
     "id": "c67ed376-52bf-4d4e-ba2a-7a0f8467b22a",
     "status": "seen",
-    "text": "Ooowww ☺️",
+    "text": "Спасибо за совет ☺️",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "Janice",
+      "firstName": "Maria",
       "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
       "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
-      "lastName": "King"
+      "lastName": "Smirnova"
     },
     "createdAt": 1655648403000,
     "height": 1280,
@@ -30,34 +31,34 @@
   },
   {
     "author": {
-      "firstName": "Janice",
+      "firstName": "Maria",
       "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
       "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
-      "lastName": "King"
+      "lastName": "Smirnova"
     },
     "createdAt": 1655648402000,
     "id": "4e048753-2d60-4144-bc28-9967050aaf12",
     "status": "seen",
-    "text": "What a ~nice~ _wonderful_ sunset! 😻",
+    "text": "Спасибо, я как раз хотела что-нибудь почитать в выходные дни",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "Matthew",
+      "firstName": "Elana",
       "id": "82091008-a484-4a89-ae75-a22bf8d6f3ac",
-      "lastName": "White"
+      "lastName": "Petrova"
     },
     "createdAt": 1655648401000,
     "id": "64747b28-df19-4a0c-8c47-316dc3546e3c",
     "status": "seen",
-    "text": "Here you go buddy! 💪",
+    "text": "Рекомендую почитать эту книгу",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "Matthew",
+      "firstName": "Maria",
       "id": "82091008-a484-4a89-ae75-a22bf8d6f3ac",
-      "lastName": "White"
+      "lastName": "Smirnova"
     },
     "createdAt": 1655648400000,
     "id": "6a1a4351-cf05-4d0c-9d0f-47ed378b6112",
@@ -70,64 +71,66 @@
   },
   {
     "author": {
-      "firstName": "John",
-      "id": "4c2307ba-3d40-442f-b1ff-b271f63904ca",
-      "lastName": "Doe"
+      "firstName": "Maria",
+      "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
+      "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
+      "lastName": "Smirnova"
     },
     "createdAt": 1655624464000,
     "id": "38681a33-2563-42aa-957b-cfc12f791d16",
     "status": "seen",
-    "text": "Matt, where is my Madrid guide?",
+    "text": "Как ты считаешь, могут ли быть серьезными отношения на расстоянии?",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "Matthew",
+      "firstName": "Elena",
       "id": "82091008-a484-4a89-ae75-a22bf8d6f3ac",
-      "lastName": "White"
+      "lastName": "Petrova"
     },
     "createdAt": 1655624463000,
     "id": "113bb2e8-f74e-42cd-aa30-4085a0f52c58",
     "status": "seen",
-    "text": "Awesome! 😍",
+    "text": "Привет, постараюсь помочь, какой у тебя вопрос?",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "Janice",
-      "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
+      "firstName": "Maria",
+      "id": "4c2307ba-3d40-442f-b1ff-b271f63904ca",
       "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
-      "lastName": "King"
+      "lastName": "Smirnova"
     },
-    "createdAt": 1655624462000,
+    "createdAt": 1655624460000,
     "id": "22212d42-1252-4641-9786-d6f83b2ce4a8",
     "status": "seen",
-    "text": "Matt, what do you think?",
+    "text": "Могу я проконсультироваться на тему отношений ",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "Janice",
+      "firstName": "Maria",
       "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
       "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
-      "lastName": "King"
+      "lastName": "Smirnova"
     },
-    "createdAt": 1655624461000,
+    "createdAt": 1655624460000,
     "id": "afc2269a-374b-4382-8864-b3b60d1e8cd7",
     "status": "seen",
-    "text": "Yeah! Together with Demna, Mark Hamill and others 🥰",
+    "text": "Мне порекомендовала тебя моя подруга",
     "type": "text"
   },
   {
     "author": {
-      "firstName": "John",
-      "id": "4c2307ba-3d40-442f-b1ff-b271f63904ca",
-      "lastName": "Doe"
+      "firstName": "Maria",
+      "id": "e52552f4-835d-4dbe-ba77-b076e659774d",
+      "imageUrl": "https://i.pravatar.cc/300?u=e52552f4-835d-4dbe-ba77-b076e659774d",
+      "lastName": "Smirnova"
     },
     "createdAt": 1655624460000,
     "id": "634b2f0b-2486-4bfe-b36d-1c7d6313c7b3",
     "status": "seen",
-    "text": "Guys! Did you know Imagine Dragons became ambassadors for u24.gov.ua ?",
+    "text": "Привет",
     "type": "text"
   }
 ]

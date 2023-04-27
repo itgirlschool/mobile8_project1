@@ -91,6 +91,8 @@ class Question {
     this.numAnswers = 0,
     this.id = 0,
     this.anonymous = false,
+    required User author,
+    required DateTime postTime,
   });
 
   Question.testQuestion()
@@ -116,6 +118,8 @@ class Answer {
     DateTime? postTime,
     required String text,
     int? id,
+    required rating,
+    required questionId,
   });
 
   Answer.testAnswer()

@@ -30,68 +30,74 @@ class MessagesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Сообщения'),
-        ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 20,
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Text('Сообщения'),
             ),
-            // for (var i = 0; i < 7; i++)
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            body: ListView(
               children: [
-                Container(
-                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 20),
-                  // BalltFhoo(),
-                  child: const PhotoAvatar(),
+                const SizedBox(
+                  height: 10,
                 ),
-                Container(
-                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ChatPage()),
-                          );
-                        },
-                        child: const Text(
-                          'Elena Petrova',
-                          style: TextStyle(
-                            fontSize: 20,
+                // for (var i = 0; i < 15; i++)
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsetsDirectional.symmetric(horizontal: 20),
+                      // BalltFhoo(),
+                      child: const PhotoAvatar(),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const ChatPage()),
+                              );
+                            },
+                            child: const Text(
+                              'Elena Petrova',
+                              style: TextStyle(
+                                fontSize: 18,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
 
-                      // const SizedBox(
-                      //   height: 5,
-                      // ),
-                      const Text('Была рада помочь)'),
-                      // Text('01.04.2023'),
-                    ],
-                  ),
+                          // const SizedBox(
+                          //   height: 5,
+                          // ),
+                          const Text("Спасибо за совет ☺️ "),
+                          // Text('01.04.2023'),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          const EdgeInsetsDirectional.symmetric(horizontal: 20),
+                      child: const Text('23.04.2023'),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                  child: const Text('23.04.2023'),
+                const SizedBox(
+                  height: 20,
                 ),
               ],
-            )
-          ],
-        ),
-      ),
-    );
+            )));
   }
 }
 
