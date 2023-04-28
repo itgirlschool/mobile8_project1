@@ -85,7 +85,15 @@ class Question {
   int numAnswers;
   bool anonymous;
 
-  Question({required this.text, required this.author, this.questionTheme = QuestionTheme.family, this.numAnswers = 0, this.id = 0, this.anonymous = false, this.postTime});
+  Question({
+    this.questionTheme = QuestionTheme.family,
+    required String text,
+    this.numAnswers = 0,
+    this.id = 0,
+    this.anonymous = false,
+    required User author,
+    required DateTime postTime,
+  });
 
   Question.testQuestion()
       : id = 200,
@@ -98,14 +106,20 @@ class Question {
 }
 
 class Answer {
-  int id;
-  int questionId;
-  String text;
-  User author;
-  DateTime? postTime = DateTime.now();
-  int rating;
+  int id = 0;
+  int questionId = 0;
+  String text = '';
+  User author = User.testPsychologist();
+  DateTime postTime = DateTime.now();
 
-  Answer({required this.text, required this.author, this.postTime, this.id = 0, this.rating = 0, this.questionId = 0});
+  Answer({
+    User? author,
+    DateTime? postTime,
+    required String text,
+    int? id,
+    required rating,
+    required questionId,
+  });
 
   Answer.testAnswer()
       : id = 300,

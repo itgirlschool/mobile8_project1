@@ -3,6 +3,7 @@ import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart'
 import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
 import 'all_questions_list_page.dart';
 import 'helpers_list_page.dart';
+import 'messages_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -56,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
         HelpersListPage(),
         AllQuestionsPage(),
         ThemeQuestionPage(),
-        HelpersListPage(),
+        MessagesPage(),
         ProfileUserPage(),
       ][_currentIndex],
     );
