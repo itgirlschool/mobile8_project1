@@ -1,4 +1,9 @@
+//страница ответов на конкретный вопрос. Берутся из файла answers.json
+//Можно добавить ответ, но он не сохраняется никуда, поэтому исчезнет
+//после того, как страница будет закрыта. Лайки после нажатия не сохраняются, просто анимация
+
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/data/userPreferences.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
 
 import '../../classes.dart';
@@ -16,6 +21,10 @@ class QuestionAnswersPage extends StatefulWidget {
 class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
   Future<List<Answer>>? answerList;
   Question question;
+  bool _addAnswerVisible = false;
+  bool _buttonAnswerVisible = true;
+  String _newAnswerText = '';
+  User? user = UserPreferences().getUserObject();
 
   _QuestionAnswersPageState(this.question);
 
@@ -42,7 +51,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _buildQuestionTitle(),
-
+                  if (_addAnswerVisible) _buildAddAnswer(),
                   if (answerList != null) ...[
                     FutureBuilder(
                       future: answerList,
@@ -83,6 +92,46 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
     );
   }
 
+  Widget _buildAddAnswer() {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextField(
+            decoration: const InputDecoration(
+              labelText: 'Введите ваш совет',
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xFFB6B6B6)),
+              ),
+              filled: true,
+              fillColor: Colors.white,
+            ),
+            keyboardType: TextInputType.text,
+            maxLines: 3,
+            onChanged: (value) {
+              setState(() {
+                _newAnswerText = value;
+              });
+            },
+          ),
+          ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  _addAnswerVisible = false;
+                  _buttonAnswerVisible = true;
+                  if (_newAnswerText.isNotEmpty) {
+                    Answer newAnswer = Answer(text: _newAnswerText, author: user!, postTime: DateTime.now());
+                    appendElements(answerList!, newAnswer);
+                  }
+                });
+              },
+              child: Text('Отправить'))
+        ],
+      ),
+    );
+  }
+
   Widget _buildEmptyAnswers() {
     return Column(
       children: const [
@@ -104,9 +153,9 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
         Expanded(
           flex: 1,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ProfileUserPage(user:question.author)),
+                MaterialPageRoute(builder: (context) => ProfileUserPage(user: question.author)),
               );
             },
             child: ClipRRect(
@@ -144,10 +193,16 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
                 const SizedBox(
                   height: 5,
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Ответить'),
-                ),
+                if (_buttonAnswerVisible)
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        _addAnswerVisible = true;
+                        _buttonAnswerVisible = false;
+                      });
+                    },
+                    child: Text('Ответить'),
+                  ),
               ],
             ),
           ),
@@ -173,7 +228,6 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
     );
   }
 
-
   Widget _buildAnswerRow(AsyncSnapshot<List<Answer>> snapshot, int i) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,7 +235,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
         Expanded(
           flex: 1,
           child: GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => ProfileUserPage(user: snapshot.data![i].author)),
               );
@@ -283,6 +337,12 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
         //fontWeight: FontWeight.bold,
       ),
     );
+  }
+
+  Future<List<Answer>> appendElements(Future<List<Answer>> listFuture, Answer elementToAdd) async {
+    final list = await listFuture;
+    list.add(elementToAdd);
+    return list;
   }
 }
 

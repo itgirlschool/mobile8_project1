@@ -1,3 +1,5 @@
+//функции для работы с данными json в папке data, которые заменяют ответы бэкэнда
+
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -42,7 +44,6 @@ Future<List<User>> fetchSearchUserList({String? nameQuery, int? ratingQuery, boo
   if (diplomaQuery != null && diplomaQuery != false) {
     items = items.where((user) => user['diploma'] == diplomaQuery).toList();
   }
-//  items.sort((a, b) => a['rating'].compareTo(b['rating']));
   for (var item in items) {
     userList.add(_buildUserFromJson(item));
   }
@@ -57,7 +58,6 @@ Future<List<Question>> fetchQuestionList() async {
 
   List items = await parseJsonAsList(path);
 
-//  items.sort((a, b) => a['rating'].compareTo(b['rating']));
   for (var item in items) {
     questionList.add(
       Question(
@@ -93,22 +93,11 @@ Future<List<Answer>> fetchAnswerList(int id) async {
       }
     }
   }
-  // Map items = data.firstWhere((element) => element['id'] == id);
-  // for (var item in items['answers']) {
-  //   answerList.add(Answer(
-  //     text: item['text'],
-  //     author: _buildUserFromJson(item['user']),
-  //     postTime: DateTime.parse(item['postTime']),
-  //     id: item['id'],
-  //     rating: item['rating'],
-  //     questionId: item['questionId'],
-  //   ));
-  // }
 
   return answerList;
 }
 
-User _buildUserFromJson(item) {
+User _buildUserFromJson(item) { //вместо этой функции позднее был добавлен специальный конструктор класс, лучше использовать его
   return User(
       name: item['name'],
       aboutSelf: item['aboutSelf'],

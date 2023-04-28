@@ -1,3 +1,5 @@
+//нижний навигационный бар
+
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';

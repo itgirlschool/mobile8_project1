@@ -1,5 +1,9 @@
+//экран ввода данных для регистрации, сохраняется в юзер префс. Имя юзера и логин на данный момент это одно и тоже поле
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/data/userPreferences.dart';
 import 'package:mobile8_project1/screens/registration_and_login_screens/telephone_verification_code_page.dart';
+
+import '../../classes.dart';
 
 class FormScreen extends StatefulWidget {
   const FormScreen({super.key});
@@ -9,10 +13,10 @@ class FormScreen extends StatefulWidget {
 }
 
 class _FormScreenState extends State<FormScreen> {
-  String? _name;
-  String? _contact;
-  String? _email;
-  String? _password;
+  String? name;
+  String? phone;
+  String? email;
+  String? password;
   var _approve = false;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -23,11 +27,10 @@ class _FormScreenState extends State<FormScreen> {
       keyboardType: TextInputType.multiline,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Введитие имя';
+          return 'Введите имя';
+        } else {
+          name = value;
         }
-      },
-      onSaved: (value) {
-        _name = value;
       },
     );
   }
@@ -36,48 +39,42 @@ class _FormScreenState extends State<FormScreen> {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Email'),
       keyboardType: TextInputType.emailAddress,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'Ведите адрес электнной почты';
-        }
-      },
-      onSaved: (value) {
-        _email = value;
-      },
+      validator: validateEmail,
     );
   }
 
-  Widget biuldContactField() {
+  Widget buildContactField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Номер телефона'),
       keyboardType: TextInputType.phone,
+      initialValue: '+7',
       validator: (value) {
         if (value!.isEmpty) {
           return 'Введите ваш номер телефона';
+        } else if (value.length != 12) {
+          return 'Неккоректная длина номера';
+        } else {
+          phone = value;
         }
-      },
-      onSaved: (value) {
-        _contact = value;
       },
     );
   }
 
-  Widget biuldPasswordField() {
+  Widget buildPasswordField() {
     return TextFormField(
       decoration: const InputDecoration(labelText: 'Придумайте пароль'),
       keyboardType: TextInputType.visiblePassword,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Введите пароль из 6 символов, включая цифры, буквы и символы';
+        } else {
+          password = value;
         }
-      },
-      onSaved: (value) {
-        _password = value;
       },
     );
   }
 
-  Widget biuldApproveField() {
+  Widget buildApproveField() {
     return CheckboxListTile(
         title: const Text('Я даю согласие на обработку персональных данных'),
         value: _approve,
@@ -93,17 +90,17 @@ class _FormScreenState extends State<FormScreen> {
         title: const Text('Форма для регистрации'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(30),
         child: Form(
             key: _formkey,
             child: ListView(
               children: [
                 buildNameField(),
-                biuldContactField(),
+                buildContactField(),
                 buildEmailField(),
-                biuldPasswordField(),
+                buildPasswordField(),
                 const SizedBox(height: 20.0),
-                biuldApproveField(),
+                buildApproveField(),
                 const SizedBox(height: 20.0),
                 const SizedBox(
                   height: 20,
@@ -115,11 +112,19 @@ class _FormScreenState extends State<FormScreen> {
                         String text;
 
                         if (_approve == false) {
-                          text =
-                              'Необходимо предоствить согласие на обработку персональных данных';
+                          text = 'Необходимо предоствить согласие на обработку персональных данных';
                         } else {
                           text = 'Форма успешно заполнена';
                           color = Colors.green;
+                          User user = User(
+                            name: name!,
+                            phone: phone!,
+                            email: email!,
+                            password: password,
+                          );
+                          UserPreferences().setUserObject(user);
+                          UserPreferences().setPassword(user.password!);
+                          UserPreferences().setUsername(user.name);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -146,5 +151,19 @@ class _FormScreenState extends State<FormScreen> {
             )),
       ),
     );
+  }
+
+  String? validateEmail(String? value) {
+    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = RegExp(pattern);
+    if (value!.isEmpty) {
+      return 'Укажите адрес элекронной почты';
+    } else if (!regex.hasMatch(value)) {
+      return 'Неверный формат адреса почты';
+    } else {
+      email = value;
+
+      return null;
+    }
   }
 }
