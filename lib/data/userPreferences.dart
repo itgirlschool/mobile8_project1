@@ -1,5 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shared_preferences/shared_preferenses.dart';
+import 'dart:convert';
+
+import '../classes.dart';
+
 
 class UserPreferences {
   //создание переменной для сохранения preferences
@@ -12,6 +15,7 @@ class UserPreferences {
   final _keyRegistrationComplete = 'registrationComplete';
   final bool _telephoneVerifiedDefault = false;
   final bool _registrationCompleteDefault = false;
+  final _keyUserObject  = 'userObject';
 
   //инициализация preferences
   Future init() async => _preferences = await SharedPreferences.getInstance();
@@ -51,4 +55,21 @@ class UserPreferences {
   bool getRegistrationComplete() =>
       _preferences?.getBool(_keyRegistrationComplete) ??
       _registrationCompleteDefault;
+
+  //сохранение объекта юзера в виде json
+  Future setUserObject(User user) async {
+    Map<String, dynamic> userJson = user.toJson();
+    await _preferences?.setString(_keyUserObject, jsonEncode(userJson));
+  }
+
+  //получение объекта юзера из сохраненного json
+  User? getUserObject() {
+    String? userJson = _preferences?.getString(_keyUserObject);
+    if (userJson != null) {
+      User fromJson =User.fromJson(jsonDecode(userJson));
+      return fromJson;
+    }
+      return null;
+
+  }
 }

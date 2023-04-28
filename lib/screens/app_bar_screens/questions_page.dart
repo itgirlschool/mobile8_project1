@@ -1,8 +1,9 @@
+//страница "Задать вопрос". Вопрос не сохраняется никуда на данный момент
+
 import 'package:flutter/material.dart';
 
 import '../../data/userPreferences.dart';
 import 'helpers_list_page.dart';
-// import 'assets/images';
 
 class ThemeQuestionPage extends StatelessWidget {
   const ThemeQuestionPage({super.key});
@@ -211,7 +212,7 @@ class _QuestionScreen extends State<QuestionScreen> {
         title: const Text('Форма для вопроса'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(20),
         child: Form(
             key: _formkey,
             child: ListView(

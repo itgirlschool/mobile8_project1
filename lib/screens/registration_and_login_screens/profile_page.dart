@@ -1,6 +1,14 @@
+//страница редактирования профиля. Во время регистрации показывается меньше полей.
+//При открытии через "Редактировать" на странице профиля, открывается больше полей.
+//Данные сохраняются в юзер префс через объект User, запакованный в json.
+//Кнопка "Загрузить диплом психолога" не обрабатывается. По логике после загрузки и подтверждения диплома
+//модератором должно открываться дополнительное поле стаж
+
 import 'package:flutter/material.dart';
-import 'package:mobile8_project1/screens/app_bar_screens/helpers_list_page.dart';
+import 'package:intl/intl.dart';
+import '../../classes.dart';
 import '../../data/userPreferences.dart';
+import '../app_bar_screens/app_bar.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,19 +18,26 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreen extends State<ProfileScreen> {
-  String? _name;
-  String? _dataBirthday;
-  String? _cityName;
-  String? _about;
-  var _approve = false;
-
+  User? user;
+  TextEditingController dateInput = TextEditingController();
+  final bool registrationComplete = UserPreferences().getRegistrationComplete(); //юзер берется из юзер префс
   var text;
   var color;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
+  @override
+  void initState() {
+    user = UserPreferences().getUserObject();
+    super.initState();
+    if (registrationComplete) {
+      dateInput.text = DateFormat('dd.MM.yyyy').format(user!.birthDate);
+    }
+  }
+
   Widget buildNameField() {
     return TextFormField(
+      initialValue: user!.name,
       decoration: const InputDecoration(labelText: 'Имя'),
       keyboardType: TextInputType.multiline,
       validator: (value) {
@@ -31,28 +46,70 @@ class _ProfileScreen extends State<ProfileScreen> {
         }
       },
       onSaved: (value) {
-        _name = value;
+        user!.name = value!;
       },
     );
   }
 
-  Widget buildDataField() {
+  Widget buildDateTimeField() {
     return TextFormField(
-      decoration: const InputDecoration(labelText: 'Дата рождения'),
-      keyboardType: TextInputType.datetime,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Ведите дату рождения';
+          return 'Введитие дату рождения';
         }
       },
-      onSaved: (value) {
-        _dataBirthday = value;
+      controller: dateInput,
+      //editing controller of this TextField
+      decoration: const InputDecoration(
+          icon: Icon(Icons.calendar_today), //icon of text field
+          labelText: "Дата рождения" //label text of field
+          ),
+      readOnly: true,
+      //set it true, so that user will not able to edit text
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+          context: context,
+          //initialDate: user!.birthDate,
+          initialDate: DateTime.now(),
+          firstDate: DateTime(1940),
+          //DateTime.now() - not to allow to choose before today.
+          lastDate: DateTime.now(),
+        );
+
+        if (pickedDate != null) {
+          user!.birthDate = pickedDate;
+          //pickedDate output format => 2021-03-10 00:00:00.000
+          //String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+          String formattedDate = DateFormat('dd.MM.yyyy').format(pickedDate);
+          //formatted date output using intl package =>  2021-03-16
+          setState(() {
+            dateInput.text = formattedDate; //set output date to TextField value.
+          });
+        } else {}
       },
     );
   }
 
-  Widget biuldCityField() {
+  //
+  // Widget buildDataField() {
+  //   return TextFormField(
+  //     initialValue: user!.name,
+  //     decoration: const InputDecoration(labelText: 'Дата рождения'),
+  //     keyboardType: TextInputType.datetime,
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         return 'Ведите дату рождения';
+  //       }
+  //     },
+  //     onSaved: (value) {
+  //       _dataBirthday = value;
+  //     },
+  //   );
+  // }
+
+  Widget buildCityField() {
     return TextFormField(
+      initialValue: user!.city,
       decoration: const InputDecoration(labelText: 'Ваш город'),
       keyboardType: TextInputType.multiline,
       validator: (value) {
@@ -61,76 +118,186 @@ class _ProfileScreen extends State<ProfileScreen> {
         }
       },
       onSaved: (value) {
-        _cityName = value;
+        user!.city = value!;
       },
     );
   }
 
-  Widget biuldAboutField() {
+  Widget buildAboutField() {
     return TextFormField(
-      decoration: const InputDecoration(
-          labelText: 'Напишите о себе несколько предложений'),
+      initialValue: user!.aboutSelf,
+      decoration: const InputDecoration(labelText: 'Напишите о себе несколько предложений'),
       keyboardType: TextInputType.text,
+      maxLines: 3,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Напишите о себе ';
         }
       },
       onSaved: (value) {
-        _about = value;
+        user!.aboutSelf = value!;
       },
     );
   }
 
-  Widget biuldApproveField() {
+  Widget buildPhotoField() {
+    return TextFormField(
+      initialValue: user!.photo == 'lib/data/photos/default.jpg' ? '' : user!.photo,
+      decoration: const InputDecoration(labelText: 'Ваше фото (URL ссылка)'),
+      keyboardType: TextInputType.multiline,
+      validator: validateImageUrl,
+      onSaved: (value) {
+        user!.photo = value!;
+      },
+    );
+  }
+
+  Widget buildApproveField() {
     return CheckboxListTile(
         title: const Text('Я хочу помогать'),
-        value: _approve,
+        value: user!.helper,
         onChanged: (bool? value) {
-          setState(() => _approve = value!);
+          setState(() => user!.helper = value!);
         });
+  }
+
+  Widget buildAdditionalFields() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildContactField(),
+        buildEmailField(),
+        // buildPasswordField(),
+        //  buildPhotoField()
+        SizedBox(
+          height: 10,
+        ),
+      ],
+    );
+  }
+
+  Widget buildPsycho() {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text('Загрузить диплом психолога'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFFFFA036),
+      ),
+    );
+  }
+
+  Widget buildEmailField() {
+    return TextFormField(
+      initialValue: user!.email,
+      decoration: const InputDecoration(labelText: 'Email'),
+      keyboardType: TextInputType.emailAddress,
+      validator: validateEmail,
+      onSaved: (value) {
+        user!.email = value!;
+      },
+    );
+  }
+
+  Widget buildContactField() {
+    return TextFormField(
+      initialValue: user!.phone,
+      decoration: const InputDecoration(labelText: 'Номер телефона'),
+      keyboardType: TextInputType.phone,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Введите ваш номер телефона';
+        } else if (value.length != 12) {
+          return 'Неккоректная длина номера';
+        }
+      },
+      onSaved: (value) {
+        user!.phone = value!;
+      },
+    );
+  }
+
+  Widget buildPasswordField() {
+    return TextFormField(
+      initialValue: user!.password,
+      decoration: const InputDecoration(labelText: 'Ваш пароль'),
+      keyboardType: TextInputType.visiblePassword,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return 'Введите пароль из 6 символов, включая цифры, буквы и символы';
+        }
+      },
+      onSaved: (value) {
+        user!.password = value!;
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    return buildUserProfile(context);
+  }
+
+  Widget buildUserProfile(BuildContext context) {
+    if (registrationComplete) {
+      return WillPopScope(
+          onWillPop: () async {
+            Navigator.pop(context, user);
+            return false;
+          },
+          child: buildScaffold(context));
+    } else {
+      return buildScaffold(context);
+    }
+  }
+
+  Scaffold buildScaffold(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Профиль пользователя'),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(30),
         child: Form(
             key: _formkey,
             child: ListView(
               children: [
                 buildNameField(),
-                buildDataField(),
-                biuldCityField(),
-                biuldAboutField(),
+                // buildDataField(),
+                buildDateTimeField(),
+                buildCityField(),
+                buildAboutField(),
+                // buildPhotoField(),
+                if (registrationComplete) buildAdditionalFields(),
                 const SizedBox(height: 20.0),
-                biuldApproveField(),
+                buildApproveField(),
+                if (registrationComplete) buildPsycho(),
                 const SizedBox(height: 20.0),
                 const SizedBox(
                   height: 20,
                 ),
+
                 ElevatedButton(
                     onPressed: () {
-                      if (!_formkey.currentState!.validate()) {
-                        Color color = Colors.red;
-                        String text;
-                      }
+                      Color color = Colors.red;
+                      String text;
 
                       if (!_formkey.currentState!.validate()) {
                         text = 'Необходимо заполнить поля';
                       } else {
-                        UserPreferences().setRegistrationComplete();
+                        _formkey.currentState!.save();
+                        UserPreferences().setUserObject(user!);
+
                         text = 'Данные профиля сохранены';
                         color = Colors.green;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HelpersListPage()),
-                        );
+                        if (registrationComplete) {
+                          Navigator.pop(context, user);
+                        } else {
+                          UserPreferences().setRegistrationComplete();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                          );
+                        }
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -151,5 +318,27 @@ class _ProfileScreen extends State<ProfileScreen> {
             )),
       ),
     );
+  }
+
+  String? validateImageUrl(String? value) {
+    String pattern = r'^https?:\/\/.*\.(jpeg|jpg|gif|png)$';
+    RegExp regex = RegExp(pattern);
+    if (!regex.hasMatch(value!) && value.isNotEmpty) {
+      return 'Неверный формат ссылки';
+    } else {
+      return null;
+    }
+  }
+
+  String? validateEmail(String? value) {
+    String pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = RegExp(pattern);
+    if (value!.isEmpty) {
+      return 'Укажите адрес элекронной почты';
+    } else if (!regex.hasMatch(value)) {
+      return 'Неверный формат адреса почты';
+    } else {
+      return null;
+    }
   }
 }

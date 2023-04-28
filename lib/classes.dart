@@ -1,10 +1,8 @@
-
+//классы пользователя, вопроса, ответа, а также вспомогательные функции, которые используются на многих экранах
 
 enum Role { basicUser, psychologist }
 
 enum QuestionTheme { family, work, relationship, children }
-// const List<String> role = ['basicUser', 'psychologist'];
-// const List<String> qestionTheme = ['family', 'work', 'relationship', 'children'];
 
 class User {
   int id;
@@ -12,7 +10,7 @@ class User {
   String phone;
   String email;
   String? password;
-  DateTime birthDate = DateTime(1990, 1, 1);
+  DateTime birthDate = DateTime.now();
   String city;
   String aboutSelf;
   int rating;
@@ -39,7 +37,7 @@ class User {
       this.experienceYears = 0,
       this.photo = 'lib/data/photos/default.jpg'});
 
-  User.testBasicUser()
+  User.testBasicUser() //тестовый юзер для верстки
       : id = 100,
         name = 'Анна Петрова',
         phone = '+79991234567',
@@ -55,7 +53,7 @@ class User {
         numAnswers = 10,
         diploma = false;
 
-  User.testPsychologist()
+  User.testPsychologist() //тестовый юзер психолог для верстки
       : id = 101,
         name = 'Сергей Крылов',
         phone = '+79991234568',
@@ -70,6 +68,44 @@ class User {
         numAnswers = 15,
         experienceYears = 4,
         photo = 'lib/data/photos/default.jpg';
+
+  User.fromJson(Map<String, dynamic> item) //распаковка юзера из json, используется при доставании юзера из юзер префс
+      : name = item['name'] ?? '',
+        aboutSelf = item['aboutSelf'] ?? '',
+        city = item['city'] ??'',
+        diploma = item['diploma'] ?? false,
+        email = item['email'] ?? '',
+        helper = item['helper']?? false,
+        id = item['id'] ?? 0,
+        password = item['password'] ?? '',
+        phone = item['phone'] ?? '',
+        photo = item['photo'] != ''? item['photo']: 'lib/data/photos/default.jpg',
+        rating = item['rating'] ?? 0,
+        numAnswers = item['numAnswers'] ?? 0,
+        experienceYears = item['experienceYears'] ?? 0,
+        role = item['role'].isEmpty ? Role.values.byName(item['role']) : Role.basicUser,
+        birthDate = DateTime.parse(item['birthDate']);
+
+
+  Map<String, dynamic> toJson () { //запаковка юзера в json
+    return {
+      "id": id,
+      "name": name,
+      "email": email,
+      "phone": phone,
+      "birthDate": birthDate.toString(),
+      "city": city,
+      "aboutSelf": aboutSelf,
+      "role": role.name,
+      "diploma": diploma,
+      "helper" : helper,
+      "rating" : rating,
+      "numAnswers" : numAnswers,
+      "experienceYears" : experienceYears,
+      "photo": photo,
+      "password" : password
+    };
+  }
 
   birthDateToString() {
     return "${birthDate.day}.${birthDate.month}.${birthDate.year}";
@@ -95,7 +131,7 @@ class Question {
     required DateTime postTime,
   });
 
-  Question.testQuestion()
+  Question.testQuestion() //тестовый вопрос для верстки
       : id = 200,
         author = User.testBasicUser(),
         numAnswers = 2,
@@ -121,7 +157,7 @@ class Answer {
     required questionId,
   });
 
-  Answer.testAnswer()
+  Answer.testAnswer() //тестовый ответ для верстки
       : id = 300,
         questionId = 200,
         postTime = DateTime.now(),
@@ -131,14 +167,12 @@ class Answer {
         author = User.testPsychologist();
 }
 
-String dateToString(DateTime dateTime) {
+String dateToString(DateTime dateTime) { //сначала использовали, но вообще лучше не использвать, а брать DateFormat
   return "${dateTime.day}.${dateTime.month}.${dateTime.year}";
 }
 
-String dateTimeToString(DateTime dateTime) {
+String dateTimeToString(DateTime dateTime) { //лучше использовать DateFormat
   return "${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year}  ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
-
-
 }
 
 String questionThemeRu(QuestionTheme val) {
@@ -160,7 +194,7 @@ String questionThemeRu(QuestionTheme val) {
   return ru;
 }
 
-String daysToString (int days) {
+String daysToString(int days) {
   if (days % 10 == 1 && days % 100 != 11) {
     return "день";
   } else if ([2, 3, 4].contains(days % 10) && ![12, 13, 14].contains(days % 100)) {
@@ -169,7 +203,6 @@ String daysToString (int days) {
     return "дней";
   }
 }
-
 
 String timePassed(DateTime postTime) {
   DateTime today = DateTime.now();
