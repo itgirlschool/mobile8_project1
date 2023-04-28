@@ -1,3 +1,5 @@
+
+
 enum Role { basicUser, psychologist }
 
 enum QuestionTheme { family, work, relationship, children }
@@ -44,8 +46,7 @@ class User {
         email = 'anna@adviser.ru',
         birthDate = DateTime(1990, 1, 1),
         city = 'Новосибирск',
-        aboutSelf =
-            'Живу в Новосибирске, замужем, двое детей. Работаю в IT. Дети учатся в школе. Муж шеф-повар.',
+        aboutSelf = 'Живу в Новосибирске, замужем, двое детей. Работаю в IT. Дети учатся в школе. Муж шеф-повар.',
         rating = 5,
         photo = 'lib/data/photos/default.jpg',
         role = Role.basicUser,
@@ -61,8 +62,7 @@ class User {
         email = 'sergey@adviser.ru',
         birthDate = DateTime(1995, 4, 5),
         city = 'Москва',
-        aboutSelf =
-            'Живу в Москве, окончил университет, опыт работы психологом 10 лет',
+        aboutSelf = 'Живу в Москве, окончил университет, опыт работы психологом 10 лет',
         rating = 10,
         role = Role.psychologist,
         helper = true,
@@ -72,16 +72,16 @@ class User {
         photo = 'lib/data/photos/default.jpg';
 
   birthDateToString() {
-    return "${birthDate?.day}.${birthDate?.month}.${birthDate?.year}";
+    return "${birthDate.day}.${birthDate.month}.${birthDate.year}";
   }
 }
 
 class Question {
   int id;
   QuestionTheme questionTheme = QuestionTheme.family;
-  User? author = User.testBasicUser();
-  DateTime postTime = DateTime.now();
-  String text = '';
+  User author;
+  DateTime? postTime = DateTime.now();
+  String text;
   int numAnswers;
   bool anonymous;
 
@@ -99,8 +99,7 @@ class Question {
       : id = 200,
         author = User.testBasicUser(),
         numAnswers = 2,
-        text =
-            'Как наладить отношения с родственником, с которым я постоянно конфликтую?',
+        text = 'Как наладить отношения с родственником, с которым я постоянно конфликтую?',
         postTime = DateTime.now(),
         anonymous = false,
         questionTheme = QuestionTheme.family;
@@ -126,7 +125,60 @@ class Answer {
       : id = 300,
         questionId = 200,
         postTime = DateTime.now(),
+        rating = 5,
         text =
             'Для начала стоит выяснить, что именно вызывает конфликты в отношениях с вами и вашим родственником. Попробуйте сесть и поговорить наедине, чтобы высказать свои чувства и услышать со стороны взгляд друг на друга. Важно понимать, что каждый имеет право на свою точку зрения, и попытаться найти компромиссное решение, которое будет удовлетворительно для обеих сторон.',
         author = User.testPsychologist();
+}
+
+String dateToString(DateTime dateTime) {
+  return "${dateTime.day}.${dateTime.month}.${dateTime.year}";
+}
+
+String dateTimeToString(DateTime dateTime) {
+  return "${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year}  ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+
+
+}
+
+String questionThemeRu(QuestionTheme val) {
+  String ru = '';
+  switch (val) {
+    case QuestionTheme.family:
+      ru = 'Семья';
+      break;
+    case QuestionTheme.work:
+      ru = 'Работа';
+      break;
+    case QuestionTheme.relationship:
+      ru = 'Отношения';
+      break;
+    case QuestionTheme.children:
+      ru = 'Дети';
+      break;
+  }
+  return ru;
+}
+
+String daysToString (int days) {
+  if (days % 10 == 1 && days % 100 != 11) {
+    return "день";
+  } else if ([2, 3, 4].contains(days % 10) && ![12, 13, 14].contains(days % 100)) {
+    return "дня";
+  } else {
+    return "дней";
+  }
+}
+
+
+String timePassed(DateTime postTime) {
+  DateTime today = DateTime.now();
+  int passedDays = today.difference(postTime).inDays;
+  if (passedDays > 0 && passedDays <= 7) {
+    return '$passedDays ${daysToString(passedDays)} назад';
+  } else if (passedDays == 0) {
+    return 'Сегодня';
+  } else {
+    return dateTimeToString(postTime);
+  }
 }
