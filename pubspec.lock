@@ -138,7 +138,7 @@ packages:
     source: hosted
     version: "2.2.5"
   diffutil_dart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: diffutil_dart
       sha256: e0297e4600b9797edff228ed60f4169a778ea357691ec98408fa3b72994c7d06
@@ -146,7 +146,7 @@ packages:
     source: hosted
     version: "3.0.0"
   equatable:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: equatable
       sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2

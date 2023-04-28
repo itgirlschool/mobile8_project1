@@ -30,7 +30,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
 
   @override
   void initState() {
-    answerList = fetchAnswerList(question.id);
+    answerList = fetchAnswerList(question.id!);
     super.initState();
   }
 
@@ -244,7 +244,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
               padding: const EdgeInsets.only(top: 8.0),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(100.0), // Image radius
-                  child: Image.asset(snapshot.data![i].author.photo)),
+                  child: Image.asset(snapshot.data![i].author!.photo)),
             ),
           ),
         ),
@@ -293,13 +293,13 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
     return Row(
       children: [
         Text(
-          snapshot.data![i].author.name,
+          snapshot.data![i].author!.name,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         const SizedBox(
           width: 10,
         ),
-        if (snapshot.data![i].author.diploma == true) ...[
+        if (snapshot.data![i].author!.diploma == true) ...[
           Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(3),

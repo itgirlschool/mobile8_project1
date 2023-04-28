@@ -1,9 +1,10 @@
+//чат с пользователем, используется библиотека flutter_chat_ui
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -29,75 +30,78 @@ class MessagesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Text('Сообщения'),
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Сообщения'),
+        ),
+        body: ListView(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-            body: ListView(
-              children: [
-                const SizedBox(
-                  height: 10,
-                ),
-                // for (var i = 0; i < 15; i++)
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsetsDirectional.symmetric(horizontal: 20),
-                      // BalltFhoo(),
-                      child: const PhotoAvatar(),
-                    ),
-                    Container(
-                      margin:
-                          const EdgeInsetsDirectional.symmetric(horizontal: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const ChatPage()),
-                              );
-                            },
-                            child: const Text(
-                              'Elena Petrova',
-                              style: TextStyle(
-                                fontSize: 18,
-                              ),
-                            ),
-                          ),
+            // for (var i = 0; i < 15; i++)
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatPage()),
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  Container(
+                    margin: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+                    // BalltFhoo(),
+                    child: const PhotoAvatar(),
+                  ),
+                  Container(
+                    margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.max,
+                      children:  [
+                        Row(
 
-                          // const SizedBox(
-                          //   height: 5,
-                          // ),
-                          const Text("Спасибо за совет ☺️ "),
-                          // Text('01.04.2023'),
-                        ],
-                      ),
+                          children: [
+                            Text(
+                              'Elena Petrova',
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
+                            ),
+                            SizedBox(width: 20,),
+                            Container(
+                              margin: const EdgeInsetsDirectional.symmetric(horizontal: 20),
+                              child: const Text('23.04.2023'),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(
+                          height: 8,
+                        ),
+                        // const SizedBox(
+                        //   height: 5,
+                        // ),
+                        Text("Спасибо за совет ☺️ "),
+                        // Text('01.04.2023'),
+                      ],
                     ),
-                    Container(
-                      margin:
-                          const EdgeInsetsDirectional.symmetric(horizontal: 20),
-                      child: const Text('23.04.2023'),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-              ],
-            )));
+                  ),
+
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+          ],
+        ));
   }
 }
 
@@ -111,6 +115,7 @@ class PhotoAvatar extends StatelessWidget {
       // height: 200,
       // margin: EdgeInsetsGeometry.lerp(10, 10, 10),
       child: (const CircleAvatar(
+
         radius: 30,
         backgroundColor: Colors.blue,
         child: CircleAvatar(
@@ -144,6 +149,9 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: const Text('Сообщения'),
+        ),
         body: Chat(
           messages: _messages,
           onAttachmentPressed: _handleAttachmentPressed,
@@ -153,6 +161,7 @@ class _ChatPageState extends State<ChatPage> {
           showUserAvatars: true,
           showUserNames: true,
           user: _user,
+          theme: const DefaultChatTheme(primaryColor: Colors.lightBlue),
         ),
       );
 
@@ -257,10 +266,8 @@ class _ChatPageState extends State<ChatPage> {
 
       if (message.uri.startsWith('http')) {
         try {
-          final index =
-              _messages.indexWhere((element) => element.id == message.id);
-          final updatedMessage =
-              (_messages[index] as types.FileMessage).copyWith(
+          final index = _messages.indexWhere((element) => element.id == message.id);
+          final updatedMessage = (_messages[index] as types.FileMessage).copyWith(
             isLoading: true,
           );
 
@@ -279,10 +286,8 @@ class _ChatPageState extends State<ChatPage> {
             await file.writeAsBytes(bytes);
           }
         } finally {
-          final index =
-              _messages.indexWhere((element) => element.id == message.id);
-          final updatedMessage =
-              (_messages[index] as types.FileMessage).copyWith(
+          final index = _messages.indexWhere((element) => element.id == message.id);
+          final updatedMessage = (_messages[index] as types.FileMessage).copyWith(
             isLoading: null,
           );
 
@@ -323,9 +328,7 @@ class _ChatPageState extends State<ChatPage> {
 
   void _loadMessages() async {
     final response = await rootBundle.loadString('assets/messages.json');
-    final messages = (jsonDecode(response) as List)
-        .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
-        .toList();
+    final messages = (jsonDecode(response) as List).map((e) => types.Message.fromJson(e as Map<String, dynamic>)).toList();
 
     setState(() {
       _messages = messages;

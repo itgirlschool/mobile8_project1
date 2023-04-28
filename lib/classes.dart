@@ -113,7 +113,7 @@ class User {
 }
 
 class Question {
-  int id;
+  int? id;
   QuestionTheme questionTheme = QuestionTheme.family;
   User author;
   DateTime? postTime = DateTime.now();
@@ -123,12 +123,12 @@ class Question {
 
   Question({
     this.questionTheme = QuestionTheme.family,
-    required String text,
+    required this.text,
     this.numAnswers = 0,
-    this.id = 0,
+    this.id,
     this.anonymous = false,
-    required User author,
-    required DateTime postTime,
+    required this.author,
+    required this.postTime,
   });
 
   Question.testQuestion() //тестовый вопрос для верстки
@@ -142,19 +142,20 @@ class Question {
 }
 
 class Answer {
-  int id = 0;
-  int questionId = 0;
+  int? id;
+  int? questionId;
   String text = '';
-  User author = User.testPsychologist();
-  DateTime postTime = DateTime.now();
+  User? author = User.testPsychologist();
+  DateTime? postTime = DateTime.now();
+  int rating;
 
   Answer({
-    User? author,
-    DateTime? postTime,
-    required String text,
-    int? id,
-    required rating,
-    required questionId,
+    this.author,
+    this.postTime,
+    required this.text,
+    this.id,
+    this.rating =0,
+    this.questionId,
   });
 
   Answer.testAnswer() //тестовый ответ для верстки
