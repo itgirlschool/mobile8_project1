@@ -1,28 +1,35 @@
+//страница профиля пользователя
+//есть кнопка редактировать, если это "мой профиль". Изменения сохранятся в объект юзера в префс
+//еще должна быть кнопка "Написать", если это чужой профиль, там должен открываться чат
+//и еще кнопку "Выйти" надо добавить
+
 import 'package:flutter/material.dart';
 import '../../classes.dart';
+import '../../data/userPreferences.dart';
+import '../registration_and_login_screens/profile_page.dart';
 
 class ProfileUserPage extends StatelessWidget {
   User? user;
+  bool myPage = false;
 
-  //ProfileUserPage({super.key, this.user});
   ProfileUserPage({super.key, this.user}) {
-    user = user ?? User.testBasicUser();
+    myPage = user != null ? false : true;
+    user = user ?? UserPreferences().getUserObject(); //если не передан пользователь в качестве аргумента, то открывается страница текущего пользователя приложения
   }
 
   @override
   Widget build(BuildContext context) {
-    return PersonWidget(user: user!);
+    return PersonWidget(user: user!, myPage: myPage);
   }
 }
 
 class FavoriteWidget extends StatefulWidget {
+  User user;
 
-  User? user;
-
-  FavoriteWidget({super.key, this.user});
+  FavoriteWidget({super.key, required this.user});
 
   @override
-  State<FavoriteWidget> createState() => _FavoriteWidgetState(user!);
+  State<FavoriteWidget> createState() => _FavoriteWidgetState(user);
 }
 
 class _FavoriteWidgetState extends State<FavoriteWidget> {
@@ -42,16 +49,14 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
           child: IconButton(
             onPressed: _toggleFavorite,
             color: Colors.red[500],
-            icon: (_isFavorited ? Icon(Icons.favorite) : Icon(Icons.favorite_border)),
+            icon: (_isFavorited ? const Icon(Icons.favorite) : const Icon(Icons.favorite_border)),
           ),
         ),
         SizedBox(
           width: 40,
           child: Container(
-
             //child: Text('$_favoriteCount'),
             child: Text(user.rating.toString()),
-
           ),
         ),
       ],
@@ -66,33 +71,67 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       } else {
         _isFavorited = true;
         user.rating += 1;
-
       }
     });
   }
 }
 
-class PersonWidget extends StatelessWidget {
-  User? user;
+class PersonWidget extends StatefulWidget {
+  User user;
+  bool myPage;
 
-  PersonWidget({super.key, this.user});
+  PersonWidget({super.key, required this.user, required this.myPage});
 
+  @override
+  State<PersonWidget> createState() => _PersonWidgetState(user, myPage);
+}
+
+class _PersonWidgetState extends State<PersonWidget> {
+  User user;
+  bool myPage;
+  String text = '11';
+  _PersonWidgetState(this.user, this.myPage);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Профиль'),
-
       ),
       body: Container(
-        child: _buildMainColumn(),
+        child: _buildMainColumn(context),
       ),
     );
   }
 
-  Widget _buildMainColumn() => ListView(
+  Widget _buildMainColumn(BuildContext context) => ListView(
         children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (myPage)
+                  ElevatedButton(
+                    onPressed: () async {
+                      final data = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProfileScreen(),
+                        ),
+                      );
+                      setState(() {
+                        user = data;
+                      });
+                    },
+                    child: Text("Редактировать"),
+                  ),
+
+
+              ],
+
+            ),
+          ),
           _builTopImage(),
           Center(
             child: Container(
@@ -101,6 +140,7 @@ class PersonWidget extends StatelessWidget {
                 right: 20,
               ),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.all(5),
@@ -114,7 +154,7 @@ class PersonWidget extends StatelessWidget {
                       child: _buildAction(),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -136,8 +176,7 @@ class PersonWidget extends StatelessWidget {
         ),
         elevation: 5,
         child: Image.asset(
-          user!.photo,
-
+          user.photo,
           fit: BoxFit.cover,
         ),
       );
@@ -145,14 +184,14 @@ class PersonWidget extends StatelessWidget {
   Widget _buildRaiting() => ListTile(
 
         title: Text(
-          user!.name,
-          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
+          user.name,
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
         ),
-        subtitle: Text(user!.city),
+        subtitle: Text(user.city),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            FavoriteWidget(user: user!),
+            FavoriteWidget(user: user),
           ],
         ),
       );
@@ -160,14 +199,13 @@ class PersonWidget extends StatelessWidget {
   Widget _buildAction() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildButton('${user!.numAnswers} ${_getAnswersTitle(user!.numAnswers)}', Icons.star, Colors.black),
-          if (user!.diploma) ...[
+          _buildButton('${user.numAnswers} ${_getAnswersTitle(user.numAnswers)}', Icons.star, Colors.black),
+          if (user.diploma) ...[
             _buildButton('Диплом', Icons.topic, Colors.black),
           ],
-          if (user!.experienceYears >0) ...[
-            _buildButton('Стаж ${user!.experienceYears} ${_getYearsTitle(user!.experienceYears)}', Icons.auto_graph, Colors.black),
+          if (user.experienceYears > 0) ...[
+            _buildButton('Стаж ${user.experienceYears} ${_getYearsTitle(user.experienceYears)}', Icons.auto_graph, Colors.black),
           ]
-
         ],
       );
 
@@ -189,15 +227,12 @@ class PersonWidget extends StatelessWidget {
         ],
       );
 
-
   Widget _buildDesc() => Text(
-        user!.aboutSelf,
-
+        user.aboutSelf,
         softWrap: true,
-        style: TextStyle(fontSize: 16),
+        style: const TextStyle(fontSize: 16),
       );
 }
-
 
 String _getAnswersTitle(int numAnswers) {
   int lastDigit = numAnswers % 10;
@@ -224,4 +259,3 @@ String _getYearsTitle(int numYears) {
     return "лет";
   }
 }
-

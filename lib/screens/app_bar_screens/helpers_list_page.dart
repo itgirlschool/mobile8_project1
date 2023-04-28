@@ -1,3 +1,6 @@
+//страница "Помощники". Выводит пользователей из файла users.json с флажком helper = true из json
+//поиск работает по файлу json
+
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
 import '../../classes.dart';
@@ -35,7 +38,6 @@ class _HelpersListPageState extends State<HelpersListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.blue[50],
-     // backgroundColor: Colors.orange,
       appBar: AppBar(
         title: const Text('Помощники'),
       ),
@@ -82,8 +84,6 @@ class _HelpersListPageState extends State<HelpersListPage> {
                       },
                     ),
                   ],
-                  // buildNameYouField(),
-                  // biuldContactYouField(),
                 ],
               ),
             ),
@@ -105,7 +105,6 @@ class _HelpersListPageState extends State<HelpersListPage> {
           height: 10,
         ),
         TextField(
-          //controller: TextEditingController()..text = searchName,
           controller: nameController,
 
           decoration: const InputDecoration(
@@ -130,14 +129,13 @@ class _HelpersListPageState extends State<HelpersListPage> {
         SizedBox(
           //width: 150,
           child: TextField(
-            //controller: TextEditingController()..text = searchName,
             controller: ratingController,
 
             decoration: const InputDecoration(
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFFB6B6B6)),
               ),
-              //border: OutlineInputBorder(),
+
               filled: true,
               fillColor: Colors.white,
               labelText: 'Рейтинг ❤️ от',

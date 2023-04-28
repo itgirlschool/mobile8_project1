@@ -1,3 +1,5 @@
+//страница верификации номера телефона. Код не отправляется, просто анимация
+
 import 'package:mobile8_project1/screens/registration_and_login_screens/profile_page.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
