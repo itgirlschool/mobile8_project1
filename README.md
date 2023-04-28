@@ -1,17 +1,14 @@
 # mobile8_project1
 
-A new Flutter project.
+Flutter приложение для помощи советами нуждающимся.
 
-## Getting Started
+Реализованы:
+- Регистрация пользователя
+- Просмотр и редактирование своего профиля, просмотр чужих профилей
+- Экран поиска помощника. Помощником может быть пользователь, который отметил, что хочет помогать, а также профессиональный психолог, подтвердивший свой диплом
+- Экран "Ждут помощи". Список вопросов от пользователей сервиса. 
+- Экран ответов на вопрос (советов)
+- Экран создания вопроса
+- Экран личных сообщений и чата с конкретным пользователем
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# mobile8_project1
+Работающий прототип без бэкэнда. Часть бэкэнда имитируют файлы JSON с ответами от сервера.
