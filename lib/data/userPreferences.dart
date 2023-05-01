@@ -69,7 +69,7 @@ class UserPreferences {
       User fromJson =User.fromJson(jsonDecode(userJson));
       return fromJson;
     }
-      return null;
+      return User(name: '');
 
   }
 }
