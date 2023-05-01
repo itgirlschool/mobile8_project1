@@ -97,7 +97,7 @@ Future<List<Answer>> fetchAnswerList(int id) async {
   return answerList;
 }
 
-User _buildUserFromJson(item) { //вместо этой функции позднее был добавлен специальный конструктор класс, лучше использовать его
+User _buildUserFromJson(item) { //вместо этой функции позднее был добавлен специальный конструктор классa, лучше использовать его
   return User(
       name: item['name'],
       aboutSelf: item['aboutSelf'],

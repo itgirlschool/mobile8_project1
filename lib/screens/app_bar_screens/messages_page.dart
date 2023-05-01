@@ -16,15 +16,6 @@ import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
-// class MyWidget extends StatelessWidget {
-//   const MyWidget({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const Placeholder();
-//   }
-// }
-
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});
 
@@ -52,48 +43,61 @@ class MessagesPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 50,
+
+                  const Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: PhotoAvatar(),
+                    ),
                   ),
-                  Container(
-                    margin: const EdgeInsetsDirectional.symmetric(horizontal: 20),
-                    // BalltFhoo(),
-                    child: const PhotoAvatar(),
-                  ),
-                  Container(
-                    margin: const EdgeInsetsDirectional.symmetric(horizontal: 10),
+
+                  Expanded(
+                    flex: 3,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
-                      children:  [
+                      children: [
                         Row(
-
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Elena Petrova',
                               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.blue),
                             ),
-                            SizedBox(width: 20,),
-                            Container(
-                              margin: const EdgeInsetsDirectional.symmetric(horizontal: 20),
-                              child: const Text('23.04.2023'),
+                            // const SizedBox(
+                            //   width: 20,
+                            // ),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 10.0),
+                              child: Text('23.04.2023'),
                             ),
+
                           ],
                         ),
 
-                        SizedBox(
-                          height: 8,
+                        Row(
+                          children: const [
+                            SizedBox(
+                              height: 8,
+                            ),
+                          ],
                         ),
                         // const SizedBox(
                         //   height: 5,
                         // ),
-                        Text("Спасибо за совет ☺️ "),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: const [
+                            Text("Спасибо за совет ☺️"
+                            ),
+                          ],
+                        ),
                         // Text('01.04.2023'),
                       ],
                     ),
                   ),
-
                 ],
               ),
             ),
@@ -110,12 +114,9 @@ class PhotoAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // width: 200,
-      // height: 200,
-      // margin: EdgeInsetsGeometry.lerp(10, 10, 10),
-      child: (const CircleAvatar(
-
+    return const SizedBox(
+      width: 60,
+      child: (CircleAvatar(
         radius: 30,
         backgroundColor: Colors.blue,
         child: CircleAvatar(

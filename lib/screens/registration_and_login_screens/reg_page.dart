@@ -1,7 +1,7 @@
 //экран ввода данных для регистрации, сохраняется в юзер префс. Имя юзера и логин на данный момент это одно и тоже поле
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/data/userPreferences.dart';
-import 'package:mobile8_project1/screens/registration_and_login_screens/telephone_verification_code_page.dart';
+import 'package:mobile8_project1/screens/registration_and_login_screens/telephone_verification_page.dart';
 
 import '../../classes.dart';
 

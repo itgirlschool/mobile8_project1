@@ -1,5 +1,7 @@
 //классы пользователя, вопроса, ответа, а также вспомогательные функции, которые используются на многих экранах
 
+import 'package:intl/intl.dart';
+
 enum Role { basicUser, psychologist }
 
 enum QuestionTheme { family, work, relationship, children }
@@ -213,6 +215,6 @@ String timePassed(DateTime postTime) {
   } else if (passedDays == 0) {
     return 'Сегодня';
   } else {
-    return dateTimeToString(postTime);
+    return DateFormat('dd.MM.yyyy').format(postTime);
   }
 }

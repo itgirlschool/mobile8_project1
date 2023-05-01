@@ -20,7 +20,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreen extends State<ProfileScreen> {
   User? user;
   TextEditingController dateInput = TextEditingController();
-  final bool registrationComplete = UserPreferences().getRegistrationComplete(); //юзер берется из юзер префс
+  final bool registrationComplete = UserPreferences().getLoggedIn();
   var text;
   var color;
 
@@ -28,7 +28,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   @override
   void initState() {
-    user = UserPreferences().getUserObject();
+    user = UserPreferences().getUserObject(); //юзер берется из юзер префс
     super.initState();
     if (registrationComplete) {
       dateInput.text = DateFormat('dd.MM.yyyy').format(user!.birthDate);
@@ -90,22 +90,6 @@ class _ProfileScreen extends State<ProfileScreen> {
     );
   }
 
-  //
-  // Widget buildDataField() {
-  //   return TextFormField(
-  //     initialValue: user!.name,
-  //     decoration: const InputDecoration(labelText: 'Дата рождения'),
-  //     keyboardType: TextInputType.datetime,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return 'Ведите дату рождения';
-  //       }
-  //     },
-  //     onSaved: (value) {
-  //       _dataBirthday = value;
-  //     },
-  //   );
-  // }
 
   Widget buildCityField() {
     return TextFormField(
@@ -232,22 +216,30 @@ class _ProfileScreen extends State<ProfileScreen> {
     );
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return buildUserProfile(context);
+  // }
+  //оставила закоммеченным как пример использования WillPopScope.
+  //Убрала, потому что навигация стала более сложной из-за возможности разлогиниться.
+  //Эта же форма используется во время регистрации, поэтому willpop усложняет всё.
+  //Делаю прямой пуш с расчисткой истории навигации
+  // Widget buildUserProfile(BuildContext context) {
+  //   if (registrationComplete) {
+  //     return WillPopScope( //
+  //         onWillPop: () async {
+  //           Navigator.pop(context, user);
+  //           return false;
+  //         },
+  //         child: buildScaffold(context));
+  //   } else {
+  //     return buildScaffold(context);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
-    return buildUserProfile(context);
-  }
-
-  Widget buildUserProfile(BuildContext context) {
-    if (registrationComplete) {
-      return WillPopScope(
-          onWillPop: () async {
-            Navigator.pop(context, user);
-            return false;
-          },
-          child: buildScaffold(context));
-    } else {
-      return buildScaffold(context);
-    }
+    return buildScaffold(context);
   }
 
   Scaffold buildScaffold(BuildContext context) {
@@ -287,15 +279,22 @@ class _ProfileScreen extends State<ProfileScreen> {
                         _formkey.currentState!.save();
                         UserPreferences().setUserObject(user!);
 
+
                         text = 'Данные профиля сохранены';
                         color = Colors.green;
                         if (registrationComplete) {
-                          Navigator.pop(context, user);
+                          //Navigator.pop(context, user);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => MyHomePage(index: 4,)),
+                          // );
+                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                              MyHomePage(index: 4,)), (Route<dynamic> route) => false);
                         } else {
-                          UserPreferences().setRegistrationComplete();
+                          UserPreferences().setLoggedIn(true);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
                           );
                         }
                       }

@@ -332,7 +332,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
     return Text(
       snapshot.data![i].text,
       style: const TextStyle(
-        fontSize: 17,
+        fontSize: 15,
         color: Colors.black,
         //fontWeight: FontWeight.bold,
       ),

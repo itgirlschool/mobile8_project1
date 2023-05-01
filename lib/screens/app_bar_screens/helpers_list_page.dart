@@ -107,13 +107,20 @@ class _HelpersListPageState extends State<HelpersListPage> {
         TextField(
           controller: nameController,
 
-          decoration: const InputDecoration(
+          decoration:InputDecoration(
             labelText: 'Имя',
             enabledBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xFFB6B6B6)),
             ),
             filled: true,
             fillColor: Colors.white,
+            suffixIcon: IconButton(onPressed: (){
+              nameController.clear;
+              setState(() {
+                userList = fetchSearchUserList(nameQuery: '');
+                nameController.text = '';
+              });
+            } , icon: Icon(Icons.clear))
           ),
           keyboardType: TextInputType.text,
           onSubmitted: (String search) {
@@ -131,14 +138,21 @@ class _HelpersListPageState extends State<HelpersListPage> {
           child: TextField(
             controller: ratingController,
 
-            decoration: const InputDecoration(
-              enabledBorder: OutlineInputBorder(
+            decoration:  InputDecoration(
+              enabledBorder: const OutlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFFB6B6B6)),
               ),
 
               filled: true,
               fillColor: Colors.white,
               labelText: 'Рейтинг ❤️ от',
+                suffixIcon: IconButton(onPressed: (){
+                  ratingController.clear;
+                  setState(() {
+                    userList = fetchSearchUserList(nameQuery: '');
+                    ratingController.text = '';
+                  });
+                } , icon: Icon(Icons.clear))
             ),
             keyboardType: TextInputType.number,
             onSubmitted: (String search) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/app_bar.dart';
-import 'package:mobile8_project1/screens/registration_and_login_screens/profile_page.dart';
+import 'package:mobile8_project1/screens/registration_and_login_screens/profile_edit_page.dart';
 import 'classes.dart';
 import 'data/userPreferences.dart';
 import 'screens/registration_and_login_screens/login_page.dart';
@@ -21,7 +21,7 @@ Future main() async {
 class AdvisersApp extends StatelessWidget {
   AdvisersApp({super.key});
 
-  final bool goToMainPage = UserPreferences().getRegistrationComplete(); //идти на главную страницу ("Ждут помощи"), если регистрация полностью завершена
+  final bool goToMainPage = UserPreferences().getLoggedIn(); //идти на главную страницу ("Ждут помощи"), если регистрация полностью завершена
   final bool goToProfilePage = UserPreferences().getTelephoneVerificationComplete(); //идти на страницу заполнения профиля при регистрации, если она не была заполнена
   // здесь еще нужно обрабатывать если юзер зареган, но не залогинен
   @override
@@ -44,11 +44,11 @@ class AdvisersApp extends StatelessWidget {
 
   Widget buildHomePage() {
     if (goToMainPage) {
-      return const MyHomePage();
+      return MyHomePage();
     } else if (goToProfilePage) {
-      return const ProfileScreen();
+      return ProfileScreen();
     } else {
-      return const LoginPage();
+      return LoginPage();
     }
   }
 }

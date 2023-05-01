@@ -4,9 +4,10 @@
 //и еще кнопку "Выйти" надо добавить
 
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/registration_and_login_screens/login_page.dart';
 import '../../classes.dart';
 import '../../data/userPreferences.dart';
-import '../registration_and_login_screens/profile_page.dart';
+import '../registration_and_login_screens/profile_edit_page.dart';
 
 class ProfileUserPage extends StatelessWidget {
   User? user;
@@ -90,6 +91,7 @@ class _PersonWidgetState extends State<PersonWidget> {
   User user;
   bool myPage;
   String text = '11';
+
   _PersonWidgetState(this.user, this.myPage);
 
   @override
@@ -111,25 +113,42 @@ class _PersonWidgetState extends State<PersonWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                if (myPage)
+                if (myPage) ...[
                   ElevatedButton(
-                    onPressed: () async {
-                      final data = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfileScreen(),
-                        ),
-                      );
-                      setState(() {
-                        user = data;
-                      });
+                    // onPressed: () async {
+                    //   final data = await Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const ProfileScreen(),
+                    //     ),
+                    //   );
+                    //   setState(() {
+                    //     user = data;
+                    //   });
+                    // },
+                    onPressed: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ProfileScreen(),
+                      //   ),
+                      // );
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          ProfileScreen()), (Route<dynamic> route) => false);
                     },
                     child: Text("Редактировать"),
                   ),
+                  SizedBox(width: 10,),
+                  ElevatedButton(
+                    onPressed: ()  {
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                          LoginPage()), (Route<dynamic> route) => false);
 
-
+                    },
+                    child: Text("Выйти"),
+                  ),
+                ]
               ],
-
             ),
           ),
           _builTopImage(),
@@ -182,7 +201,6 @@ class _PersonWidgetState extends State<PersonWidget> {
       );
 
   Widget _buildRaiting() => ListTile(
-
         title: Text(
           user.name,
           style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
