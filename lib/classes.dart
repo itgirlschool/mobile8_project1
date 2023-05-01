@@ -1,5 +1,11 @@
 //классы пользователя, вопроса, ответа, а также вспомогательные функции, которые используются на многих экранах
 
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+
+import 'package:intl/intl.dart';
+
 enum Role { basicUser, psychologist }
 
 enum QuestionTheme { family, work, relationship, children }
@@ -72,10 +78,10 @@ class User {
   User.fromJson(Map<String, dynamic> item) //распаковка юзера из json, используется при доставании юзера из юзер префс
       : name = item['name'] ?? '',
         aboutSelf = item['aboutSelf'] ?? '',
-        city = item['city'] ??'',
+        city = item['city'] ?? '',
         diploma = item['diploma'] ?? false,
         email = item['email'] ?? '',
-        helper = item['helper']?? false,
+        helper = item['helper'] ?? false,
         id = item['id'] ?? 0,
         password = item['password'] ?? '',
         phone = item['phone'] ?? '',
@@ -86,8 +92,8 @@ class User {
         role = item['role'].isEmpty ? Role.values.byName(item['role']) : Role.basicUser,
         birthDate = DateTime.parse(item['birthDate']);
 
-
-  Map<String, dynamic> toJson () { //запаковка юзера в json
+  Map<String, dynamic> toJson() {
+    //запаковка юзера в json
     return {
       "id": id,
       "name": name,
@@ -98,13 +104,29 @@ class User {
       "aboutSelf": aboutSelf,
       "role": role.name,
       "diploma": diploma,
-      "helper" : helper,
-      "rating" : rating,
-      "numAnswers" : numAnswers,
-      "experienceYears" : experienceYears,
+      "helper": helper,
+      "rating": rating,
+      "numAnswers": numAnswers,
+      "experienceYears": experienceYears,
       "photo": photo,
-      "password" : password
+      "password": password
     };
+  }
+
+  Widget buildPhotoImage() {
+    if (photo == '' || photo == 'lib/data/photos/default.jpg') {
+      return Image.asset('lib/data/photos/default.jpg');
+    } else {
+      return ClipRRect(
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: Image.file(
+            File(photo),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
   }
 
   birthDateToString() {
@@ -154,7 +176,7 @@ class Answer {
     this.postTime,
     required this.text,
     this.id,
-    this.rating =0,
+    this.rating = 0,
     this.questionId,
   });
 
@@ -168,11 +190,13 @@ class Answer {
         author = User.testPsychologist();
 }
 
-String dateToString(DateTime dateTime) { //сначала использовали, но вообще лучше не использвать, а брать DateFormat
+String dateToString(DateTime dateTime) {
+  //сначала использовали, но вообще лучше не использвать, а брать DateFormat
   return "${dateTime.day}.${dateTime.month}.${dateTime.year}";
 }
 
-String dateTimeToString(DateTime dateTime) { //лучше использовать DateFormat
+String dateTimeToString(DateTime dateTime) {
+  //лучше использовать DateFormat
   return "${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year}  ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
 }
 
@@ -213,6 +237,6 @@ String timePassed(DateTime postTime) {
   } else if (passedDays == 0) {
     return 'Сегодня';
   } else {
-    return dateTimeToString(postTime);
+    return DateFormat('dd.MM.yyyy').format(postTime);
   }
 }

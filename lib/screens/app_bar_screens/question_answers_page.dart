@@ -243,8 +243,12 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100.0), // Image radius
-                  child: Image.asset(snapshot.data![i].author!.photo)),
+                borderRadius: BorderRadius.circular(100.0),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: snapshot.data![i].author! == user? user!.buildPhotoImage(): Image.asset(snapshot.data![i].author!.photo),
+                ),
+              ),
             ),
           ),
         ),
@@ -332,7 +336,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
     return Text(
       snapshot.data![i].text,
       style: const TextStyle(
-        fontSize: 17,
+        fontSize: 15,
         color: Colors.black,
         //fontWeight: FontWeight.bold,
       ),

@@ -2,20 +2,24 @@
 
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/app_bar_screens/profile_user_page.dart';
-import 'package:mobile8_project1/screens/app_bar_screens/questions_page.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/create_question_page.dart';
 import 'all_questions_list_page.dart';
 import 'helpers_list_page.dart';
 import 'messages_page.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  int index;
+  MyHomePage({super.key, this.index = 0});
+
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(currentIndex:index);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
+  int currentIndex;
+
+  _MyHomePageState({this.currentIndex = 0});
 
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -25,7 +29,7 @@ class _MyHomePageState extends State<MyHomePage> {
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        currentIndex: _currentIndex,
+        currentIndex: currentIndex,
         backgroundColor: colorScheme.surface,
         selectedItemColor: Colors.blue,
         unselectedItemColor: colorScheme.onSurface.withOpacity(.40),
@@ -33,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //unselectedLabelStyle: textTheme.caption,
         onTap: (value) {
           // Respond to item press.
-          setState(() => _currentIndex = value);
+          setState(() => currentIndex = value);
         },
         items: const [
           BottomNavigationBarItem(
@@ -61,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ThemeQuestionPage(),
         MessagesPage(),
         ProfileUserPage(),
-      ][_currentIndex],
+      ][currentIndex],
     );
   }
 }

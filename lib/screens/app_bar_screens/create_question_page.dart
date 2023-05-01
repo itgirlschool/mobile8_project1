@@ -1,9 +1,9 @@
 //страница "Задать вопрос". Вопрос не сохраняется никуда на данный момент
 
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/app_bar.dart';
 
-import '../../data/userPreferences.dart';
-import 'helpers_list_page.dart';
+
 
 class ThemeQuestionPage extends StatelessWidget {
   const ThemeQuestionPage({super.key});
@@ -156,7 +156,7 @@ class QuestionScreen extends StatefulWidget {
 }
 
 class _QuestionScreen extends State<QuestionScreen> {
-  String? _question;
+
   var _psychologist = false;
   var _anonymous = false;
 
@@ -235,13 +235,14 @@ class _QuestionScreen extends State<QuestionScreen> {
                       if (!_formkey.currentState!.validate()) {
                         text = 'Необходимо заполнить поля';
                       } else {
-                        UserPreferences().setRegistrationComplete();
                         text = 'Вопрос успешно опубликован';
                         color = Colors.green;
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const HelpersListPage()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(builder: (context) => MyHomePage()),
+                        // );
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                            MyHomePage(index: 1,)), (Route<dynamic> route) => false);
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(

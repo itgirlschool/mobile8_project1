@@ -1,6 +1,6 @@
 //страница верификации номера телефона. Код не отправляется, просто анимация
 
-import 'package:mobile8_project1/screens/registration_and_login_screens/profile_page.dart';
+import 'package:mobile8_project1/screens/registration_and_login_screens/profile_edit_page.dart';
 import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
 import '../../data/userPreferences.dart';
@@ -50,7 +50,7 @@ class _TelephoneCodeVerificationPageState
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              flex: 4,
+              flex: 9,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -97,7 +97,7 @@ class _TelephoneCodeVerificationPageState
               ),
             ),
             Expanded(
-              flex: 1,
+              flex: 2,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -108,43 +108,46 @@ class _TelephoneCodeVerificationPageState
                         pinController.setText(correctPin);
                       });
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 60),
-                      child: AnimatedOpacity(
-                        opacity: bottomMessageVisible ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 1800),
-                        curve: const Interval(0.5, 0.8),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: const Color(0xffa7e799),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2,
-                                blurRadius: 7,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
-                              ),
-                            ],
-                          ),
-                          child: SizedBox(
-                            height: 70,
-                            child: Padding(
-                              padding:
-                              const EdgeInsets.only(right: 20, left: 20),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Ваш код подтверждения: $correctPin",
-                                  ),
-                                  const SizedBox(height: 5.0),
-                                  const Text(
-                                    "Нажмите для ввода",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                ],
+                    child: SizedBox(
+                      height: 120,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 40),
+                        child: AnimatedOpacity(
+                          opacity: bottomMessageVisible ? 1.0 : 0.0,
+                          duration: const Duration(milliseconds: 1800),
+                          curve: const Interval(0.5, 0.8),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: const Color(0xffa7e799),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 2,
+                                  blurRadius: 7,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: SizedBox(
+                             // height: 70,
+                              child: Padding(
+                                padding:
+                                const EdgeInsets.only(right: 20, left: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Ваш код подтверждения: $correctPin",
+                                    ),
+                                    const SizedBox(height: 5.0),
+                                    const Text(
+                                      "Нажмите для ввода",
+                                      style: TextStyle(fontSize: 12),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -168,7 +171,7 @@ class _TelephoneCodeVerificationPageState
         pinError = 'Неверный код';
       });
     } else {
-      UserPreferences().setTelephoneVerificationComplete();
+      UserPreferences().setTelephoneVerificationComplete(true);
       Navigator.push(
         context,
         MaterialPageRoute(

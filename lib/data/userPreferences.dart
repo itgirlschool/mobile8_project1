@@ -12,7 +12,7 @@ class UserPreferences {
   final _keyUsername = 'username';
   final _keyPassword = 'userpassword';
   final _keyTelephoneVerified = 'telephoneVerified';
-  final _keyRegistrationComplete = 'registrationComplete';
+  final _keyLoggedIn = 'registrationComplete';
   final bool _telephoneVerifiedDefault = false;
   final bool _registrationCompleteDefault = false;
   final _keyUserObject  = 'userObject';
@@ -41,19 +41,19 @@ class UserPreferences {
   Future<bool>? deleteUserpassword() => _preferences?.remove(_keyPassword);
 
   //сохраняем флажок, что верификация номера телефона кодом пройдена
-  Future<bool>? setTelephoneVerificationComplete() =>
-      _preferences?.setBool(_keyTelephoneVerified, true);
+  Future<bool>? setTelephoneVerificationComplete(bool complete) =>
+      _preferences?.setBool(_keyTelephoneVerified, complete);
 
   //сохраняем флажок, что регистрация полностью завершена, включая обязательную анкету
-  Future<bool>? setRegistrationComplete() =>
-      _preferences?.setBool(_keyRegistrationComplete, true);
+  Future<bool>? setLoggedIn(bool complete) =>
+      _preferences?.setBool(_keyLoggedIn, complete);
 
   //Проверка пройдена ли верификация номера телефона и полная регистрация
   bool getTelephoneVerificationComplete() =>
       _preferences?.getBool(_keyTelephoneVerified) ?? _telephoneVerifiedDefault;
 
-  bool getRegistrationComplete() =>
-      _preferences?.getBool(_keyRegistrationComplete) ??
+  bool getLoggedIn() =>
+      _preferences?.getBool(_keyLoggedIn) ??
       _registrationCompleteDefault;
 
   //сохранение объекта юзера в виде json

@@ -1,13 +1,14 @@
 //страница логина, отображается при первом открытии приложения и если пользователь при регистрации не прошел проверку тел. номера
-// и если пользователь разлогинен (эта обратотка пока не сделана)
+// и если пользователь разлогинен
 
 import 'package:flutter/material.dart';
+import 'package:mobile8_project1/screens/app_bar_screens/app_bar.dart';
 import 'package:mobile8_project1/screens/registration_and_login_screens/reg_page.dart';
 import '../../data/userPreferences.dart';
-import '../app_bar_screens/helpers_list_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
 
   @override
   State<LoginPage> createState() => _LoginPage();
@@ -24,6 +25,8 @@ class _LoginPage extends State<LoginPage> {
     super.initState();
     correctName = UserPreferences().getUsername() ?? '';
     correctPassword = UserPreferences().getUserpassword() ?? '';
+    UserPreferences().setLoggedIn(false);
+    UserPreferences().setTelephoneVerificationComplete(false);
   }
 
   Widget buildNameField() {
@@ -143,10 +146,9 @@ class _LoginPage extends State<LoginPage> {
       } else {
         text = 'Идентификация пройдена';
         color = Colors.green;
-        // ignore: use_build_context_synchronously
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const HelpersListPage()),
-        );
+
+        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+            MyHomePage()), (Route<dynamic> route) => false);
       }
 
       // ignore: use_build_context_synchronously
