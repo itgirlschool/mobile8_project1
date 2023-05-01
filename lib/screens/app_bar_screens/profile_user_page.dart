@@ -3,6 +3,8 @@
 //еще должна быть кнопка "Написать", если это чужой профиль, там должен открываться чат
 //и еще кнопку "Выйти" надо добавить
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:mobile8_project1/screens/registration_and_login_screens/login_page.dart';
 import '../../classes.dart';
@@ -133,17 +135,16 @@ class _PersonWidgetState extends State<PersonWidget> {
                       //     builder: (context) => const ProfileScreen(),
                       //   ),
                       // );
-                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                          ProfileScreen()), (Route<dynamic> route) => false);
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => ProfileScreen()), (Route<dynamic> route) => false);
                     },
                     child: Text("Редактировать"),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   ElevatedButton(
-                    onPressed: ()  {
-                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                          LoginPage()), (Route<dynamic> route) => false);
-
+                    onPressed: () {
+                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => LoginPage()), (Route<dynamic> route) => false);
                     },
                     child: Text("Выйти"),
                   ),
@@ -188,17 +189,13 @@ class _PersonWidgetState extends State<PersonWidget> {
       );
 
   Widget _builTopImage() => Card(
-        margin: const EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 10,
-        ),
-        elevation: 5,
-        child: Image.asset(
-          user.photo,
-          fit: BoxFit.cover,
-        ),
-      );
+      margin: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 10,
+      ),
+      elevation: 5,
+      child: ClipRRect(child: AspectRatio(aspectRatio: 1, child: user.buildPhotoImage())));
 
   Widget _buildRaiting() => ListTile(
         title: Text(

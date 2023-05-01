@@ -4,7 +4,10 @@
 //Кнопка "Загрузить диплом психолога" не обрабатывается. По логике после загрузки и подтверждения диплома
 //модератором должно открываться дополнительное поле стаж
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../classes.dart';
 import '../../data/userPreferences.dart';
@@ -23,6 +26,64 @@ class _ProfileScreen extends State<ProfileScreen> {
   final bool registrationComplete = UserPreferences().getLoggedIn();
   var text;
   var color;
+  XFile? image;
+
+  final ImagePicker picker = ImagePicker();
+
+  //we can upload image from camera or from gallery based on parameter
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+      user!.photo = img != null ? img.path : user!.photo;
+    });
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Выберите фото'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.image),
+                        Text('Из галереи'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.camera),
+                        Text('Использовать камеру'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -33,6 +94,89 @@ class _ProfileScreen extends State<ProfileScreen> {
     if (registrationComplete) {
       dateInput.text = DateFormat('dd.MM.yyyy').format(user!.birthDate);
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return buildScaffold(context);
+  }
+
+  Scaffold buildScaffold(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Профиль пользователя'),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+            key: _formkey,
+            child: ListView(
+              children: [
+                buildPhotoField(),
+                buildNameField(),
+                buildDateTimeField(),
+                buildCityField(),
+                buildAboutField(),
+                if (registrationComplete) buildAdditionalFields(),
+                const SizedBox(height: 20.0),
+                buildApproveField(),
+                if (registrationComplete) buildPsycho(),
+                const SizedBox(height: 20.0),
+                const SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Color color = Colors.red;
+                      String text;
+
+                      if (!_formkey.currentState!.validate()) {
+                        text = 'Необходимо заполнить поля';
+                      } else {
+                        _formkey.currentState!.save();
+                        UserPreferences().setUserObject(user!);
+
+                        text = 'Данные профиля сохранены';
+                        color = Colors.green;
+                        if (registrationComplete) {
+                          //Navigator.pop(context, user);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => MyHomePage(index: 4,)),
+                          // );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => MyHomePage(
+                                        index: 4,
+                                      )),
+                              (Route<dynamic> route) => false);
+                        } else {
+                          UserPreferences().setLoggedIn(true);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MyHomePage()),
+                          );
+                        }
+                      }
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(text),
+                          backgroundColor: color,
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Сохранить',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ))
+              ],
+            )),
+      ),
+    );
   }
 
   Widget buildNameField() {
@@ -90,7 +234,6 @@ class _ProfileScreen extends State<ProfileScreen> {
     );
   }
 
-
   Widget buildCityField() {
     return TextFormField(
       initialValue: user!.city,
@@ -124,15 +267,73 @@ class _ProfileScreen extends State<ProfileScreen> {
     );
   }
 
+  // Widget buildPhotoField() { //фото из интернета. заменила на фото из галлереи
+  //   return TextFormField(
+  //     initialValue: user!.photo == 'lib/data/photos/default.jpg' ? '' : user!.photo,
+  //     decoration: const InputDecoration(labelText: 'Ваше фото (URL ссылка)'),
+  //     keyboardType: TextInputType.multiline,
+  //     validator: validateImageUrl,
+  //     onSaved: (value) {
+  //       user!.photo = value!;
+  //     },
+  //   );
+  // }
   Widget buildPhotoField() {
-    return TextFormField(
-      initialValue: user!.photo == 'lib/data/photos/default.jpg' ? '' : user!.photo,
-      decoration: const InputDecoration(labelText: 'Ваше фото (URL ссылка)'),
-      keyboardType: TextInputType.multiline,
-      validator: validateImageUrl,
-      onSaved: (value) {
-        user!.photo = value!;
-      },
+    return Column(
+      children: [
+
+        if (image != null) ...[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              width: 200,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.file(
+                    //to show image, you type like this.
+                    File(image!.path),
+                    fit: BoxFit.cover,
+                    //width: MediaQuery.of(context).size.width,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ] else ...[
+          if (user!.photo != 'lib/data/photos/default.jpg') ...[
+            ClipRRect(
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Image.file(
+                  File(user!.photo),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ] else ...[
+            Text(
+              "Не выбрано",
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        ],
+        SizedBox(
+          height: 10,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            myAlert();
+          },
+          child: Text('Редактировать фото'),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 
@@ -236,89 +437,6 @@ class _ProfileScreen extends State<ProfileScreen> {
   //     return buildScaffold(context);
   //   }
   // }
-
-  @override
-  Widget build(BuildContext context) {
-    return buildScaffold(context);
-  }
-
-  Scaffold buildScaffold(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Профиль пользователя'),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(30),
-        child: Form(
-            key: _formkey,
-            child: ListView(
-              children: [
-                buildNameField(),
-                // buildDataField(),
-                buildDateTimeField(),
-                buildCityField(),
-                buildAboutField(),
-                // buildPhotoField(),
-                if (registrationComplete) buildAdditionalFields(),
-                const SizedBox(height: 20.0),
-                buildApproveField(),
-                if (registrationComplete) buildPsycho(),
-                const SizedBox(height: 20.0),
-                const SizedBox(
-                  height: 20,
-                ),
-
-                ElevatedButton(
-                    onPressed: () {
-                      Color color = Colors.red;
-                      String text;
-
-                      if (!_formkey.currentState!.validate()) {
-                        text = 'Необходимо заполнить поля';
-                      } else {
-                        _formkey.currentState!.save();
-                        UserPreferences().setUserObject(user!);
-
-
-                        text = 'Данные профиля сохранены';
-                        color = Colors.green;
-                        if (registrationComplete) {
-                          //Navigator.pop(context, user);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => MyHomePage(index: 4,)),
-                          // );
-                          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-                              MyHomePage(index: 4,)), (Route<dynamic> route) => false);
-                        } else {
-                          UserPreferences().setLoggedIn(true);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyHomePage()),
-                          );
-                        }
-                      }
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(text),
-                          backgroundColor: color,
-                        ),
-                      );
-                    },
-                    child: const Text(
-                      'Сохранить',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ))
-              ],
-            )),
-      ),
-    );
-  }
-
   String? validateImageUrl(String? value) {
     String pattern = r'^https?:\/\/.*\.(jpeg|jpg|gif|png)$';
     RegExp regex = RegExp(pattern);

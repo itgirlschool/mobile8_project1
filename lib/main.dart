@@ -37,7 +37,7 @@ class AdvisersApp extends StatelessWidget {
         Locale('en', 'US'),
       ],
       locale: const Locale('ru'),
-      //title: 'Вход',
+      debugShowCheckedModeBanner: false,
       home: buildHomePage(),
     );
   }
