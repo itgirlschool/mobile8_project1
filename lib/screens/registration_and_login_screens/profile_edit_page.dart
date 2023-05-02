@@ -23,7 +23,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreen extends State<ProfileScreen> {
   User? user;
   TextEditingController dateInput = TextEditingController();
-  final bool registrationComplete = UserPreferences().getLoggedIn();
+  final bool loggedIn = UserPreferences().getLoggedIn();
   var text;
   var color;
   XFile? image;
@@ -91,7 +91,7 @@ class _ProfileScreen extends State<ProfileScreen> {
   void initState() {
     user = UserPreferences().getUserObject(); //юзер берется из юзер префс
     super.initState();
-    if (registrationComplete) {
+    if (loggedIn) {
       dateInput.text = DateFormat('dd.MM.yyyy').format(user!.birthDate);
     }
   }
@@ -103,9 +103,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   Scaffold buildScaffold(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Профиль пользователя'),
-      ),
+      appBar: buildAppBar(),
       body: Container(
         padding: const EdgeInsets.all(20),
         child: Form(
@@ -117,10 +115,10 @@ class _ProfileScreen extends State<ProfileScreen> {
                 buildDateTimeField(),
                 buildCityField(),
                 buildAboutField(),
-                if (registrationComplete) buildAdditionalFields(),
+                if (loggedIn) buildAdditionalFields(),
                 const SizedBox(height: 20.0),
                 buildApproveField(),
-                if (registrationComplete) buildPsycho(),
+                if (loggedIn) buildPsycho(),
                 const SizedBox(height: 20.0),
                 const SizedBox(
                   height: 20,
@@ -138,7 +136,7 @@ class _ProfileScreen extends State<ProfileScreen> {
 
                         text = 'Данные профиля сохранены';
                         color = Colors.green;
-                        if (registrationComplete) {
+                        if (loggedIn) {
                           //Navigator.pop(context, user);
                           // Navigator.push(
                           //   context,
@@ -152,10 +150,16 @@ class _ProfileScreen extends State<ProfileScreen> {
                               (Route<dynamic> route) => false);
                         } else {
                           UserPreferences().setLoggedIn(true);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyHomePage()),
-                          );
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => MyHomePage()),
+                          // );
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => MyHomePage(
+                                    index: 0,
+                                  )),
+                                  (Route<dynamic> route) => false);
                         }
                       }
 
@@ -179,11 +183,35 @@ class _ProfileScreen extends State<ProfileScreen> {
     );
   }
 
+  AppBar buildAppBar() {
+    if (loggedIn) {
+      return AppBar(
+      title: const Text('Редактировать профиль'),
+      leading: IconButton(
+        onPressed: (){
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => MyHomePage(
+                    index: 4,
+                  )),
+                  (Route<dynamic> route) => false);
+        },
+        icon:const Icon(Icons.arrow_back),
+        //replace with our own icon data.
+      )
+      ,
+    );
+    } else {
+      return AppBar(
+        title: const Text('Заполните профиль'),);
+    }
+  }
+
   Widget buildNameField() {
     return TextFormField(
       initialValue: user!.name,
       decoration: const InputDecoration(labelText: 'Имя'),
-      keyboardType: TextInputType.multiline,
+      keyboardType: TextInputType.text,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Введитие имя';
@@ -238,7 +266,7 @@ class _ProfileScreen extends State<ProfileScreen> {
     return TextFormField(
       initialValue: user!.city,
       decoration: const InputDecoration(labelText: 'Ваш город'),
-      keyboardType: TextInputType.multiline,
+      keyboardType: TextInputType.text,
       validator: (value) {
         if (value!.isEmpty) {
           return 'Введите ваш город';

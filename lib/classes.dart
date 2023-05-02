@@ -114,8 +114,10 @@ class User {
   }
 
   Widget buildPhotoImage() {
-    if (photo == '' || photo == 'lib/data/photos/default.jpg') {
+    if (photo == '' ) {
       return Image.asset('lib/data/photos/default.jpg');
+    }else if(photo.contains('lib/data/photos/')) {
+      return Image.asset(photo);
     } else {
       return ClipRRect(
         child: AspectRatio(
@@ -127,6 +129,7 @@ class User {
         ),
       );
     }
+
   }
 
   birthDateToString() {
