@@ -173,7 +173,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
               children: [
                 Text(
                   question.author.name,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),
                 ),
                 const SizedBox(
                   height: 5,
@@ -298,7 +298,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
       children: [
         Text(
           snapshot.data![i].author!.name,
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold,  fontSize: 15),
         ),
         const SizedBox(
           width: 10,
@@ -313,7 +313,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
               child: Text(
                 'психолог',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
           ),
@@ -336,7 +336,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
     return Text(
       snapshot.data![i].text,
       style: const TextStyle(
-        fontSize: 15,
+        fontSize: 17,
         color: Colors.black,
         //fontWeight: FontWeight.bold,
       ),

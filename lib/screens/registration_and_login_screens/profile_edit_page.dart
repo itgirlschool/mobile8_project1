@@ -30,60 +30,6 @@ class _ProfileScreen extends State<ProfileScreen> {
 
   final ImagePicker picker = ImagePicker();
 
-  //we can upload image from camera or from gallery based on parameter
-  Future getImage(ImageSource media) async {
-    var img = await picker.pickImage(source: media);
-
-    setState(() {
-      image = img;
-      user!.photo = img != null ? img.path : user!.photo;
-    });
-  }
-
-  //show popup dialog
-  void myAlert() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-            title: Text('Выберите фото'),
-            content: Container(
-              height: MediaQuery.of(context).size.height / 6,
-              child: Column(
-                children: [
-                  ElevatedButton(
-                    //if user click this button, user can upload image from gallery
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.gallery);
-                    },
-                    child: Row(
-                      children: const [
-                        Icon(Icons.image),
-                        Text('Из галереи'),
-                      ],
-                    ),
-                  ),
-                  ElevatedButton(
-                    //if user click this button. user can upload image from camera
-                    onPressed: () {
-                      Navigator.pop(context);
-                      getImage(ImageSource.camera);
-                    },
-                    child: Row(
-                      children: const [
-                        Icon(Icons.camera),
-                        Text('Использовать камеру'),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -137,11 +83,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                         text = 'Данные профиля сохранены';
                         color = Colors.green;
                         if (loggedIn) {
-                          //Navigator.pop(context, user);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => MyHomePage(index: 4,)),
-                          // );
+
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => MyHomePage(
@@ -150,10 +92,7 @@ class _ProfileScreen extends State<ProfileScreen> {
                               (Route<dynamic> route) => false);
                         } else {
                           UserPreferences().setLoggedIn(true);
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => MyHomePage()),
-                          // );
+
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => MyHomePage(
@@ -443,6 +382,62 @@ class _ProfileScreen extends State<ProfileScreen> {
         user!.password = value!;
       },
     );
+  }
+
+
+  //we can upload image from camera or from gallery based on parameter
+  Future getImage(ImageSource media) async {
+    var img = await picker.pickImage(source: media);
+
+    setState(() {
+      image = img;
+      user!.photo = img != null ? img.path : user!.photo;
+    });
+  }
+
+  //show popup dialog
+  void myAlert() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            title: Text('Выберите фото'),
+            content: Container(
+              height: MediaQuery.of(context).size.height / 6,
+              child: Column(
+                children: [
+                  ElevatedButton(
+                    //if user click this button, user can upload image from gallery
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.image),
+                        Text('Из галереи'),
+                      ],
+                    ),
+                  ),
+                  ElevatedButton(
+                    //if user click this button. user can upload image from camera
+                    onPressed: () {
+                      Navigator.pop(context);
+                      getImage(ImageSource.camera);
+                    },
+                    child: Row(
+                      children: const [
+                        Icon(Icons.camera),
+                        Text('Использовать камеру'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   // @override

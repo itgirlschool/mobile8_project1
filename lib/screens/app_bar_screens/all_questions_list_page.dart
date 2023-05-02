@@ -159,7 +159,7 @@ class _AllQuestionsPageState extends State<AllQuestionsPage> {
     return Text(
       snapshot.data![i].text,
       style: const TextStyle(
-        fontSize: 17,
+        fontSize: 18,
         color: Colors.black,
         //fontWeight: FontWeight.bold,
       ),
