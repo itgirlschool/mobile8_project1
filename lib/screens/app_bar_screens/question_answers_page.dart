@@ -313,7 +313,7 @@ class _QuestionAnswersPageState extends State<QuestionAnswersPage> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
               child: Text(
                 'психолог',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15),
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
               ),
             ),
           ),
