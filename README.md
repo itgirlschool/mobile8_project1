@@ -12,3 +12,5 @@ Flutter приложение для помощи советами нуждающ
 - Экран личных сообщений и чата с конкретным пользователем
 
 Без бэкэнда. Вся логика имитирует ответы от бэкенда через файлы JSON.
+
+<img src="https://github.com/itgirlschool/mobile8_project1/blob/master/assets/Advisers.png">
